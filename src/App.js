@@ -16,6 +16,7 @@ import Vehicles from "./components/Pages/components/Vehicles";
 import ItemHotelDetail from "./components/Pages/components/Hotels/ListHotel/ItemHotelDetail";
 import ItemTourDetail from "./components/Pages/components/Tours/ListTour/ItemTourDetail";
 import ItemVehicleDetail from "./components/Pages/components/Vehicles/ListVehicle/ItemVehicleDetail";
+import Blog from "./components/Pages/components/Blogs/components";
 
 function App() {
   const checkAuth = useSelector(state => state?.auth?.positionCallApiCheckAuth);
@@ -46,6 +47,8 @@ function App() {
             <Route exact path="/hotel/detail/:id" component={ItemHotelDetail}></Route>
             <Route exact path="/tour/detail/:id" component={ItemTourDetail}></Route>
             <Route exact path="/vehicle/detail/:id" component={ItemVehicleDetail}></Route>
+            <Route exact path="/blog/detail/:id" component={ItemVehicleDetail}></Route>
+            <Route exact path="/blog" component={Blog}></Route>
           </Switch>
         </React.Fragment> 
        

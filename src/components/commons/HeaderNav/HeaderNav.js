@@ -60,7 +60,7 @@ function HeaderNav(props) {
   const renderDropdown = () => {
     return (
       <div className="dropdown-wrapper">
-        <div>Blog</div>
+        <div onClick={() => history.push('/blog')}>Blog</div>
         <div>About us</div>
         <div>Contact us</div>
       </div>
