@@ -3,19 +3,37 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import "../styles/FilterData/FilterSale.scss";
 import React from "react";
 import { useState } from "react";
+import { useMemo } from "react";
 
-function FilterSale() {
+function FilterSale(props) {
+
+  const {sales} = props;
+
   const [saleSelect, setSaleSelect] = useState(0);
 
   const handleSelectRadio = (e) => {
     setSaleSelect(e.target.value);
   };
 
+  const saleArr = useMemo(() => {
+    const saleModel = sales?.filter(e => e > 0)?.map((item, index) => {
+      return {
+        value: item, 
+        id: index
+      }
+    } )
+    return saleModel;
+  }, [sales]);
+
+  console.log("check saleArr : ", saleArr);
+
+  console.log("check saleSelect :", saleSelect);
+
   return (
     <div className={`sale-wrapper`}>
       <div className="title">Hot Sale</div>
       <div className="sale-list">
-        {saleFake?.map((e, index) => {
+        {saleArr?.map((e, index) => {
           return (
             <div className={`sale-item`} key={index}>
               <FormControlLabel
@@ -36,42 +54,3 @@ function FilterSale() {
   );
 }
 export default FilterSale;
-
-const saleFake = [
-  {
-    id: 1,
-    value: 10,
-  },
-  {
-    id: 2,
-    value: 20,
-  },
-  {
-    id: 3,
-    value: 30,
-  },
-  {
-    id: 4,
-    value: 40,
-  },
-  {
-    id: 5,
-    value: 50,
-  },
-  {
-    id: 6,
-    value: 60,
-  },
-  {
-    id: 7,
-    value: 70,
-  },
-  {
-    id: 8,
-    value: 80,
-  },
-  {
-    id: 9,
-    value: 90,
-  },
-];
