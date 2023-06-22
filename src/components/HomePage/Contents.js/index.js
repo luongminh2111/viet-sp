@@ -8,7 +8,7 @@ import WhyChoose from "./WhyChoose";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getDestinationItems, getTourTrending, getVehicleTrending } from "../actions/actionCallApi";
-import { getHotelDetailItem } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
+import { getHotelDeal } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
 import { getTourDeals } from "../../Pages/components/Tours/actions/ListTourActionCallApi";
 import { getVehicleDealItems } from "../../Pages/components/Vehicles/actions/ListVehicleActionCallApi";
 
@@ -20,7 +20,7 @@ function Contents(props){
     dispatch(getDestinationItems());
     dispatch(getTourTrending());
     dispatch(getVehicleTrending());
-    dispatch(getHotelDetailItem());
+    dispatch(getHotelDeal());
     dispatch(getTourDeals());
     dispatch(getVehicleDealItems());
   }, []);

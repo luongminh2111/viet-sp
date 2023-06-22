@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getListVehicle } from "../actions/ListVehicleActionCallApi";
 import { everageStar, handleEverageStar } from "../../../../commons/actions/actionCommons";
+import { useHistory } from "react-router-dom";
 
 function ListVehicle(props) {
 
@@ -12,6 +13,7 @@ function ListVehicle(props) {
   const filter = useSelector(state => state.vehicle.filter);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getListVehicle(filter));
@@ -21,7 +23,10 @@ function ListVehicle(props) {
     dispatch(getListVehicle(filter));
   }, [filter.page]);
 
-  console.log("check itemsoooo :", items);
+
+  const handleShowDetail = (id) => {
+    history.push(`/vehicle/detail/${id}`);
+  }
 
   return (
     <div className="list-vehicle-wrapper">
@@ -39,7 +44,7 @@ function ListVehicle(props) {
       <div className="list-items">
         {items?.map((e) => {
           return (
-            <div className="vehicle-item">
+            <div className="vehicle-item" onClick={() => handleShowDetail(e.id)}>
               <div className="image">
                 <img src={e.image}></img>
                 <div className="location d-flex">

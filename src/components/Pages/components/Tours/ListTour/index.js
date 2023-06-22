@@ -5,11 +5,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getListTour } from "../actions/ListTourActionCallApi";
 import { everageStar, handleEverageStar } from "../../../../commons/actions/actionCommons";
+import { useHistory } from "react-router-dom";
 
 function ListTour(props) {
 
   const items = useSelector(state => state.tour.items);
   const filter = useSelector(state => state.tour.filter);
+
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -20,6 +23,11 @@ function ListTour(props) {
   useEffect(() => {
     dispatch(getListTour(filter));
   }, [filter.page]);
+
+  const handleShowDetail = (id) => {
+    history.push(`/tour/detail/${id}`);
+  }
+
 
   return (
     <div className="list-tour-wrapper">
@@ -37,7 +45,7 @@ function ListTour(props) {
       <div className="list-items">
         {items?.map((e) => {
           return (
-            <div className="tour-item">
+            <div className="tour-item"  onClick={() =>handleShowDetail(e.id)}>
               <div className="image">
                 <img src={e?.image || ''}></img>
                 <div className="location d-flex">

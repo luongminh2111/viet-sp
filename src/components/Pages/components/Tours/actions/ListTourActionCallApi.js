@@ -63,4 +63,18 @@ export const getSaleTour = () => dispatch => {
       return res?.data;
     }
   });
+};
+
+export const getTourDetailItem = (id) => dispatch => {
+  const options = {
+    method: 'GET'
+  }
+
+  const url =  `${BASE_URL}/api/tour/${id}`;
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      return res.data;
+    }
+  });
 }

@@ -60,4 +60,18 @@ export const getSaleVehicle = () => dispatch => {
       return res?.data;
     }
   });
+};
+
+export const getVehicleDetailItem = (id) => dispatch => {
+  const options = {
+    method: 'GET'
+  }
+
+  const url =  `${BASE_URL}/api/vehicle/${id}`;
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      return res.data;
+    }
+  });
 }

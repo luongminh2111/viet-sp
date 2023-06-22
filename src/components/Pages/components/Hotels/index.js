@@ -18,8 +18,6 @@ function Hotels (props){
   useEffect(() => {
     dispatch(getSaleHotel()).then(res => setSales(res));
   }, []);
-
-  console.log("check sale :", sales);
   return (
     <div className="hotels-wrapper">
       <HeaderNav />

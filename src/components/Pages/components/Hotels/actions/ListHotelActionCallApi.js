@@ -34,7 +34,7 @@ export const getHotelTrendingItems = () => dispatch => {
   });
 };
 
-export const getHotelDetailItem = (id) => dispatch => {
+export const getHotelDeal = (id) => dispatch => {
   const options = {
     method: 'GET'
   }
@@ -44,6 +44,20 @@ export const getHotelDetailItem = (id) => dispatch => {
   return axios.get(url, options).then(res => {
     if(res?.data){
       dispatch(updateListHotelDeal(res.data));
+    }
+  });
+}
+
+export const getHotelDetailItem = (id) => dispatch => {
+  const options = {
+    method: 'GET'
+  }
+
+  const url =  `${BASE_URL}/api/hotel/${id}`;
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      return res.data;
     }
   });
 }
