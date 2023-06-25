@@ -7,10 +7,56 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import "../styles/FilterData/FilterTime.scss";
 import { Button } from "@mui/material";
+import { parseDateToString } from "../../../ulti/dateTime";
 
 function FilterTime(props) {
-  const [dateSelect, setDateSelect] = useState(new Date());
+  const {type } = props;
+
+  const [dateStart, setDateStart] = useState(new Date());
+  const [dateEnd, setDateEnd] = useState(new Date());
+
   const dispatch = useDispatch();
+
+  console.log("check dateStart :", parseDateToString(dateStart));
+  
+  const handleChangeTimeStart = (value, typeValue) => {
+    dispatch({
+      type: `CHANGE_FILTER_${typeValue}`,
+      key: "checkIn",
+      data: value,
+    });
+  };
+
+  const handleChangeTimeEnd = (value, typeValue) => {
+    dispatch({
+      type: `CHANGE_FILTER_${typeValue}`,
+      key: "checkOut",
+      data: value,
+    });
+  };
+
+  const handleChangeFilter = () => {
+    switch (type) {
+      case "hotel": {
+        handleChangeTimeStart(parseDateToString(dateStart), 'HOTEL');
+        handleChangeTimeEnd(parseDateToString(dateEnd), 'HOTEL');
+        break;
+      }
+      case "tour": {
+        handleChangeTimeStart(parseDateToString(dateStart), 'TOUR');
+        handleChangeTimeEnd(parseDateToString(dateEnd), 'TOUR');
+        break;
+      }
+      case "vehicle": {
+        handleChangeTimeStart(parseDateToString(dateStart), 'VEHICLE');
+        handleChangeTimeEnd(parseDateToString(dateEnd), 'VEHICLE');
+        break;
+      }
+      default:
+        return;
+    }
+  };
+
   return (
     <div className="filter-time-wrapper">
       <div className="title">Time for trip</div>
@@ -19,10 +65,9 @@ function FilterTime(props) {
           <DatePicker
             className="date__button"
             label="Start date"
-            value={dateSelect}
+            value={dateStart}
             onChange={(newValue) => {
-              setDateSelect(newValue.getTime());
-              // dispatch(updatePropertiesTarget("date", newValue.getTime()));
+              setDateStart(newValue);
             }}
             renderInput={(params) => (
               <TextField
@@ -38,10 +83,9 @@ function FilterTime(props) {
           <DatePicker
             label="End date"
             className="date__button"
-            value={dateSelect}
+            value={dateEnd}
             onChange={(newValue) => {
-              setDateSelect(newValue.getTime());
-              // dispatch(updatePropertiesTarget("date", newValue.getTime()));
+              setDateEnd(newValue);
             }}
             renderInput={(params) => (
               <TextField
@@ -55,7 +99,7 @@ function FilterTime(props) {
         </div>
       </LocalizationProvider>
       <div className="search-btn d-flex justify-content-center">
-        <Button variant="contained" className="mt-3">Search</Button>
+        <Button variant="contained" className="mt-3" onClick={() => handleChangeFilter()}>Search</Button>
       </div>
     </div>
   );

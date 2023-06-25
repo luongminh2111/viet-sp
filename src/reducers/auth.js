@@ -15,7 +15,11 @@ const auth = (state = initState, action) => {
         ...state,
         account: action.account
       }
-    
+    case "RESET_AUTH":
+      return {
+        ...state,
+        account: {}
+      };
     default:
       return state;
   }

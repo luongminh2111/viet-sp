@@ -46,7 +46,28 @@
       box-sizing: border-box;
       border-radius: 6px 6px 0 0;
       margin-bottom: 24px;
+      position: relative;
       cursor: pointer;
+      &:hover {
+          button {
+            display: block;
+          
+        }
+      }
+      button {
+        position: absolute;
+        width: max-content;
+        height: 36px;
+        font-size: 14px;
+        background-color: #FFFFFF;
+        color: #0088FF;
+        top: 5px;
+        right: 8px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: none;
+      }
+     
       .image {
         width: 100%;
         height: 230px;

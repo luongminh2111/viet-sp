@@ -3,14 +3,19 @@ import "../styles/ListVehicle.scss";
 import Pagination from "../../../../commons/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getListVehicle } from "../actions/ListVehicleActionCallApi";
-import { everageStar, handleEverageStar } from "../../../../commons/actions/actionCommons";
+import { getListFilterVehicle, getListVehicle } from "../actions/ListVehicleActionCallApi";
+import {
+  everageStar,
+  handleEverageStar,
+} from "../../../../commons/actions/actionCommons";
 import { useHistory } from "react-router-dom";
+import { Button } from "@mui/material";
+import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 
 function ListVehicle(props) {
-
-  const items = useSelector(state => state.vehicle.items);
-  const filter = useSelector(state => state.vehicle.filter);
+  const items = useSelector((state) => state.vehicle.items);
+  const filter = useSelector((state) => state.vehicle.filter);
+  const cartId = useSelector(state => state.cart.id);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -20,12 +25,23 @@ function ListVehicle(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getListVehicle(filter));
-  }, [filter.page]);
-
-
+    dispatch(getListFilterVehicle());
+  }, [filter]);
+  
   const handleShowDetail = (id) => {
     history.push(`/vehicle/detail/${id}`);
+  };
+
+  const handleAddCartItem = (e) => {
+    const cartModel = {
+      cartId: cartId,
+      categoryName: 'vehicle',
+      categoryId: e?.id,
+      name: e?.name,
+      price: Number(e?.price),
+      quantity: 1,
+    }
+    dispatch(addCartItem(cartModel));
   }
 
   return (
@@ -44,21 +60,26 @@ function ListVehicle(props) {
       <div className="list-items">
         {items?.map((e) => {
           return (
-            <div className="vehicle-item" onClick={() => handleShowDetail(e.id)}>
-              <div className="image">
+            <div className="vehicle-item">
+              <div className="image" onClick={() => handleShowDetail(e.id)}>
                 <img src={e.image}></img>
                 <div className="location d-flex">
                   <div className="icon">
-                  <i className="fa-solid fa-location-dot fa-xl"></i>
+                    <i className="fa-solid fa-location-dot fa-xl"></i>
                   </div>
                   <div className="text">{e?.location?.description}</div>
                 </div>
               </div>
+              <Button onClick={() => handleAddCartItem(e)}>Add to Cart</Button>
               <div className="rate">
-                {handleEverageStar(e?.reviews)?.map(item => {
-                   return (<i className="fa-solid fa-star" style={{color: '#b0d12b', marginRight: '3px'}}></i>)
+                {handleEverageStar(e?.reviews)?.map((item) => {
+                  return (
+                    <i
+                      className="fa-solid fa-star"
+                      style={{ color: "#b0d12b", marginRight: "3px" }}
+                    ></i>
+                  );
                 })}
-             
               </div>
               <div className="point-rate d-flex">
                 <div className="point">{everageStar(e?.reviews)}.0/5.0</div>
@@ -71,7 +92,7 @@ function ListVehicle(props) {
           );
         })}
       </div>
-      <Pagination filter={filter}/>
+      <Pagination filter={filter} />
     </div>
   );
 }

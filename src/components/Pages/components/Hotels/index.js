@@ -23,7 +23,7 @@ function Hotels (props){
       <HeaderNav />
       <hr />
       <div className="hotel-content-wrapper">
-        <FilterData sales={sales} />
+        <FilterData sales={sales} type="hotel" />
         <ListHotel />
       </div>
     </div>

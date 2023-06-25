@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
 } from "react-router-dom";
 import { useSelector, Provider, useDispatch } from "react-redux";
 import HomePage from "./components/HomePage";
@@ -17,6 +16,8 @@ import ItemHotelDetail from "./components/Pages/components/Hotels/ListHotel/Item
 import ItemTourDetail from "./components/Pages/components/Tours/ListTour/ItemTourDetail";
 import ItemVehicleDetail from "./components/Pages/components/Vehicles/ListVehicle/ItemVehicleDetail";
 import Blog from "./components/Pages/components/Blogs/components";
+import BlogDetail from "./components/Pages/components/Blogs/components/BlogDetail";
+import Cart from "./components/Pages/components/Cart/components";
 
 function App() {
   const checkAuth = useSelector(state => state?.auth?.positionCallApiCheckAuth);
@@ -47,8 +48,9 @@ function App() {
             <Route exact path="/hotel/detail/:id" component={ItemHotelDetail}></Route>
             <Route exact path="/tour/detail/:id" component={ItemTourDetail}></Route>
             <Route exact path="/vehicle/detail/:id" component={ItemVehicleDetail}></Route>
-            <Route exact path="/blog/detail/:id" component={ItemVehicleDetail}></Route>
+            <Route exact path="/blog/detail/:id" component={BlogDetail}></Route>
             <Route exact path="/blog" component={Blog}></Route>
+            <Route exact path="/cart" component={Cart}></Route>
           </Switch>
         </React.Fragment> 
        

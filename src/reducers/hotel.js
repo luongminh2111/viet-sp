@@ -7,11 +7,17 @@ const initState = {
   filter: {
     page: 1,
     limit: 20,
-    total: 20
+    total: 20,
+    priceStart: 0,
+    priceEnd: 0,
+    location :'',
+    checkIn: '',
+    checkOut: '',
   }
 };
 
 const hotel = (state = initState, action) => {
+  console.log("check hotel action :", action);
   switch (action.type) {
     case actionTypeHotel.UPDATE_LIST_HOTEL:
       return {
@@ -28,20 +34,12 @@ const hotel = (state = initState, action) => {
         ...state,
         deals: action.data,
       }
-    case 'CHANGE_FILTER_PAGE_HOTEL': 
+    case 'CHANGE_FILTER_HOTEL': 
       return {
         ...state, 
         filter: {
           ...state.filter,
-          page: action.data
-        }
-      }
-      case 'CHANGE_FILTER_TOTAL_HOTEL': 
-      return {
-        ...state, 
-        filter: {
-          ...state.filter,
-          total: action.data
+          [action.key]: action.data
         }
       }
     default:

@@ -24,7 +24,7 @@ function Tours (props){
       <HeaderNav />
       <hr />
       <div className="tour-content-wrapper">
-        <FilterData sales={sales} />
+        <FilterData sales={sales} type="tour" />
         <ListTour />
       </div>
     </div>

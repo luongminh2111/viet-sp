@@ -24,7 +24,7 @@ function Vehicles (props){
       <HeaderNav />
       <hr />
       <div className="hotel-content-wrapper">
-        <FilterData sales={sales}/>
+        <FilterData sales={sales} type="vehicle" />
         <ListVehicle />
       </div>
     </div>

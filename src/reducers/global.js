@@ -5,6 +5,7 @@ const initState = {
 };
 
 const global = (state = initState, action) => {
+  console.log("check global action :", action);
   switch (action.type) {
     case 'UPDATE_DESTINATION_ITEMS':
       return {

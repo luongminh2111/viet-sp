@@ -13,12 +13,56 @@ export const getListHotel = (filter) => dispatch => {
   return callApi(url, options).then(res => {
     if(res?.data){
       if(res?.data?.totalElements){
-        dispatch({type: 'CHANGE_FILTER_TOTAL_HOTEL', data: res.data.totalElements});
+        dispatch({type: 'CHANGE_FILTER_HOTEL',key: 'total',  data: res.data.totalElements});
+      }
+      dispatch(updateListHotel(res.data?.content));
+    }
+  });
+};
+
+export const getListFilterHotel = () => (dispatch, getState) => {
+
+  const {
+    hotel: {
+      filter
+    }
+  } = getState();
+
+  const options = {
+    method: 'GET'
+  }
+
+  let url = `${BASE_URL}/api/hotel/filter?pageNumber=${filter.page}&pageSize=${filter.limit}`;
+  
+  if(filter?.location){
+    url = url + `&location=${filter.location}`;
+  }
+  if(filter?.sale){
+    url = url + `&sale=${filter.sale}`;
+  }
+  if(filter?.priceStart){
+    url = url + `&priceStart=${filter.priceStart}`;
+  }
+  if(filter?.priceEnd){
+    url = url + `&priceEnd=${filter.priceEnd}`;
+  }
+  if(filter?.checkIn){
+    url = url + `&checkIn=${filter.checkIn}`;
+  }
+  if(filter?.checkOut){
+    url = url + `&checkOut=${filter.checkOut}`;
+  }
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      if(res?.data?.totalElements){
+        dispatch({type: 'CHANGE_FILTER_HOTEL',key: 'total',  data: res.data.totalElements});
       }
       dispatch(updateListHotel(res.data?.content));
     }
   });
 }
+
 
 export const getHotelTrendingItems = () => dispatch => {
   const options = {

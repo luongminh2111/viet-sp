@@ -81,7 +81,6 @@ function Login(props) {
         password: password,
       }
       dispatch(login(loginRequest)).then(json => {
-        console.log("check json :", json);
         if(json){
           setTimeout(() => {
             handleClose();

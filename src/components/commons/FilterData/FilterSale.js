@@ -4,15 +4,19 @@ import "../styles/FilterData/FilterSale.scss";
 import React from "react";
 import { useState } from "react";
 import { useMemo } from "react";
+import { useDispatch } from "react-redux";
 
 function FilterSale(props) {
 
-  const {sales} = props;
+  const {sales, type} = props;
 
   const [saleSelect, setSaleSelect] = useState(0);
 
+  const dispatch = useDispatch();
+
   const handleSelectRadio = (e) => {
     setSaleSelect(e.target.value);
+    handleChangeFilter(e.target.value);
   };
 
   const saleArr = useMemo(() => {
@@ -25,9 +29,37 @@ function FilterSale(props) {
     return saleModel;
   }, [sales]);
 
-  console.log("check saleArr : ", saleArr);
+  const handleChangeFilter = (value) => {
+    switch (type) {
+      case "hotel": {
+        dispatch({
+          type: "CHANGE_FILTER_HOTEL",
+          key: "sale",
+          data: value,
+        });
+        break;
+      }
+      case "tour": {
+        dispatch({
+          type: "CHANGE_FILTER_TOUR",
+          key: "sale",
+          data: value,
+        });
+        break;
+      }
+      case "vehicle": {
+        dispatch({
+          type: "CHANGE_FILTER_VEHICLE",
+          key: "sale",
+          data: value,
+        });
+        break;
+      }
+      default:
+        return;
+    }
+  };
 
-  console.log("check saleSelect :", saleSelect);
 
   return (
     <div className={`sale-wrapper`}>

@@ -13,13 +13,57 @@ export const getListTour = (filter) => dispatch => {
   return callApi(url, options).then(res => {
     if(res?.data){
       if(res?.data?.totalElements){
-        dispatch({type: 'CHANGE_FILTER_TOTAL_TOUR', data: res.data.totalElements});
+        dispatch({type: 'CHANGE_FILTER_TOUR', key: 'total', data: res.data.totalElements});
       }
       dispatch(updateListTour(res.data?.content));
     }
   });
 
 }
+
+export const getListFilterTour = () => (dispatch, getState) => {
+
+  const {
+    tour: {
+      filter
+    }
+  } = getState();
+
+  const options = {
+    method: 'GET'
+  }
+
+  let url = `${BASE_URL}/api/tour/filter?pageNumber=${filter.page}&pageSize=${filter.limit}`;
+  
+  if(filter?.location){
+    url = url + `&location=${filter.location}`;
+  }
+  if(filter?.sale){
+    url = url + `&sale=${filter.sale}`;
+  }
+  if(filter?.priceStart){
+    url = url + `&priceStart=${filter.priceStart}`;
+  }
+  if(filter?.priceEnd){
+    url = url + `&priceEnd=${filter.priceEnd}`;
+  }
+  if(filter?.checkIn){
+    url = url + `&checkIn=${filter.checkIn}`;
+  }
+  if(filter?.checkOut){
+    url = url + `&checkOut=${filter.checkOut}`;
+  }
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      if(res?.data?.totalElements){
+        dispatch({type: 'CHANGE_FILTER_TOUR',key: 'total',  data: res.data.totalElements});
+      }
+      dispatch(updateListTour(res.data?.content));
+    }
+  });
+}
+
 
 export const getTourTrendingItems = () => dispatch => {
   const options = {
@@ -28,7 +72,7 @@ export const getTourTrendingItems = () => dispatch => {
 
   const url =  `${BASE_URL}/api/tour/find/trending`;
 
-  return callApi(url, options).then(res => {
+  return axios.get(url, options).then(res => {
     if(res?.data){
       dispatch(updateListTourTrending(res.data));
       return res.data;
@@ -59,7 +103,6 @@ export const getSaleTour = () => dispatch => {
   
   return callApi(url, options).then(res => {
     if(res?.data){
-      console.log("check sale tour : ", res?.data);
       return res?.data;
     }
   });

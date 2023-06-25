@@ -147,7 +147,6 @@ function Register(props) {
         phone: phoneNumber,
       }
       dispatch(register(registerRequest)).then(json => {
-        console.log("check json :", json);
         if(json){
           setTimeout(() => {
             handleOpenLoginForm();

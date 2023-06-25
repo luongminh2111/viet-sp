@@ -12,13 +12,56 @@ export const getListVehicle = (filter) => dispatch => {
   return callApi(url, options).then(res => {
     if(res?.data){
       if(res?.data?.totalElements){
-        dispatch({type: 'CHANGE_FILTER_TOTAL_VEHICLE', data: res.data.totalElements});
+        dispatch({type: 'CHANGE_FILTER_VEHICLE',key: 'total', data: res.data.totalElements});
       }
       dispatch(updateListVehicle(res.data?.content));
     }
   });
 
 };
+
+export const getListFilterVehicle = () => (dispatch, getState) => {
+
+  const {
+    vehicle: {
+      filter
+    }
+  } = getState();
+
+  const options = {
+    method: 'GET'
+  }
+
+  let url = `${BASE_URL}/api/vehicle/filter?pageNumber=${filter.page}&pageSize=${filter.limit}`;
+  
+  if(filter?.location){
+    url = url + `&location=${filter.location}`;
+  }
+  if(filter?.sale){
+    url = url + `&sale=${filter.sale}`;
+  }
+  if(filter?.priceStart){
+    url = url + `&priceStart=${filter.priceStart}`;
+  }
+  if(filter?.priceEnd){
+    url = url + `&priceEnd=${filter.priceEnd}`;
+  }
+  if(filter?.checkIn){
+    url = url + `&checkIn=${filter.checkIn}`;
+  }
+  if(filter?.checkOut){
+    url = url + `&checkOut=${filter.checkOut}`;
+  }
+
+  return callApi(url, options).then(res => {
+    if(res?.data){
+      if(res?.data?.totalElements){
+        dispatch({type: 'CHANGE_FILTER_VEHICLE',key: 'total',  data: res.data.totalElements});
+      }
+      dispatch(updateListVehicle(res.data?.content));
+    }
+  });
+}
 
 export const getVehicleTrendingItems = () => dispatch => {
   const options = {
@@ -56,7 +99,6 @@ export const getSaleVehicle = () => dispatch => {
   
   return callApi(url, options).then(res => {
     if(res?.data){
-      console.log("check sale vehicle : ", res?.data);
       return res?.data;
     }
   });

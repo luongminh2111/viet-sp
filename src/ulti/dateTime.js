@@ -14,3 +14,14 @@ export const getTimeForTrip = (start, end) => {
 
   return `${ hourStart - hourEnd}hour ${minuteStart - minuteEnd}minutes`
 }
+
+function toPadZeroString(n) {
+  return n >= 10 ? `${n}` : `0${n}`;
+}
+
+export const parseDateToString = (date) => {
+  const year = new Date(date).getFullYear();
+  const month = toPadZeroString(new Date(date).getMonth() + 1);
+  const day= new Date(date).getDate();
+  return `${year}-${month}-${day}`;
+}

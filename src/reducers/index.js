@@ -4,11 +4,15 @@ import hotel from './hotel';
 import tour from './tour';
 import vehicle from './vehicle';
 import global from './global';
+import cart from './cart';
+import blog from './blog';
 
 export default combineReducers({
   auth,
   hotel,
   tour,
   vehicle,
-  global
+  global,
+  cart,
+  blog
 });

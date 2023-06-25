@@ -7,11 +7,18 @@ const initState = {
   filter: {
     page: 1,
     limit: 20,
-    total: 0
+    total: 20,
+    priceStart: 0,
+    priceEnd: 0,
+    location :'',
+    checkIn: '',
+    checkOut: ''
   }
 };
 
 const tour = (state = initState, action) => {
+  console.log("check tour action :", action);
+
   switch (action.type) {
     case actionTypeTour.UPDATE_LIST_TOUR:
       return {
@@ -28,20 +35,12 @@ const tour = (state = initState, action) => {
         ...state,
         deals: action.data,
       }
-      case 'CHANGE_FILTER_PAGE_TOUR': 
+      case 'CHANGE_FILTER_TOUR': 
       return {
         ...state, 
         filter: {
           ...state.filter,
-          page: action.data
-        }
-      }
-      case 'CHANGE_FILTER_TOTAL_TOUR': 
-      return {
-        ...state, 
-        filter: {
-          ...state.filter,
-          total: action.data
+          [action.key]: action.data
         }
       }
     default:
