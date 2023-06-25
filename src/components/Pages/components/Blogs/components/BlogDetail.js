@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   getBlogDetailItem,
@@ -14,8 +14,11 @@ import Comment from "./Comment";
 
 function BlogDetail(props) {
   const [item, setItem] = useState("");
-  const [comments, setComments] = useState([]);
 
+  const comments  = useSelector(state => state.blog.comments);
+
+  console.log("check comments :",comments);
+  
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -26,7 +29,7 @@ function BlogDetail(props) {
     dispatch(getBlogDetailItem(id)).then((res) => {
       setItem(res);
     });
-    dispatch(getCommentsByBlogItem(id)).then((res) => setComments(res));
+    dispatch(getCommentsByBlogItem(id));
   }, []);
 
   return (
@@ -92,7 +95,7 @@ function BlogDetail(props) {
                         <span className="icon">
                           <i className="fa-solid fa-user"></i>
                         </span>
-                        <span className="user-name">{comment?.userDTO?.fullName}</span>
+                        <span className="user-name">{comment?.userDTO?.username}</span>
                       </div>
                       <div className="comment-content">{comment?.content}</div>
                     </div>

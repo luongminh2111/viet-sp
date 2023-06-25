@@ -2,6 +2,7 @@
 const initState = {
   items: [],
   categories: [],
+  comments: [],
   filter: {
     page: 1,
     limit: 20,
@@ -22,6 +23,11 @@ const blog = (state = initState, action) => {
     return {
       ...state, 
       categories: action.data
+    }
+    case 'ADD_LIST_BLOG_COMMENTS': 
+    return {
+      ...state, 
+      comments: action.data
     }
     case 'CHANGE_FILTER_BLOG': 
       return {

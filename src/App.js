@@ -28,7 +28,14 @@ function App() {
     try {
       const token = sessionStorage.getItem('token');
       const username = jwt_decode(JSON.stringify(token))?.sub;
-      dispatch(updateUser({username}))
+      const id = jwt_decode(JSON.stringify(token))?.id;
+      const role = jwt_decode(JSON.stringify(token))?.role;
+      const account = {
+        username: username,
+        userId: id,
+        userRole: role,
+      };
+      dispatch(updateUser(account));
     }
     catch(e) {
       // setUser('');

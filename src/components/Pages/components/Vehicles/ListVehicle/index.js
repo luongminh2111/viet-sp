@@ -27,7 +27,7 @@ function ListVehicle(props) {
   useEffect(() => {
     dispatch(getListFilterVehicle());
   }, [filter]);
-  
+
   const handleShowDetail = (id) => {
     history.push(`/vehicle/detail/${id}`);
   };

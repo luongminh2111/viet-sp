@@ -2,13 +2,13 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import "../styles/Comment.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { postComment } from "../actions/BlogActionCallApi";
+import { getCommentsByBlogItem, postComment } from "../actions/BlogActionCallApi";
 
 function Comment(props) {
   const { blogId, parentId } = props;
 
   const auth = useSelector(state => state.auth.account);
-
+  console.log("check auth :", auth);
   const [content, setContent] = useState('');
 
   const dispatch = useDispatch();
@@ -27,8 +27,13 @@ function Comment(props) {
       blogId: blogId,
       parentId: parentId || 0,
       content: content
-    }
+    };
+    console.log("check model : ", commentModel);
     dispatch(postComment(commentModel));
+    setTimeout(() => {
+      dispatch(getCommentsByBlogItem(blogId));
+    }, [1000]);
+
     setContent('');
   }
 

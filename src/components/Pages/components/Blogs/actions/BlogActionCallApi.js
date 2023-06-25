@@ -86,7 +86,10 @@ export const getCommentsByBlogItem = (id) => dispatch => {
 
   return callApi(url, options).then(res => {
     if(res?.data){
-      return res.data;
+      dispatch({
+        type: 'ADD_LIST_BLOG_COMMENTS',
+        data: res.data
+      });
     }
   });
 };
