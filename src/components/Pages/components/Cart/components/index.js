@@ -4,6 +4,8 @@ import Footer from "../../../../HomePage/Footer";
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import "../styles/index.scss";
 import { useDispatch, useSelector } from "react-redux";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import {
   changeCartItemProperties,
   deleteAllCartItem,
@@ -20,8 +22,25 @@ function Cart(props) {
   const [openCheckoutModal, setOpenCheckoutModal] = useState(false);
 
   const cart = useSelector((state) => state.cart);
+
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const onCloseClickHandler = (event) => {
+    setShowSnackbar(false);
+  };
+
+  const CustomSnackbar = (props) => (
+    <Snackbar
+      autoHideDuration={2000}
+      open={showSnackbar}
+      onClose={onCloseClickHandler}
+      anchorOrigin={{ horizontal: "center", vertical: "top" }}
+      children={props.children}
+    ></Snackbar>
+  );
 
   useEffect(() => {
     try {
@@ -87,11 +106,20 @@ function Cart(props) {
     const cartSelect = cart?.items?.filter((e) => checkList?.includes(e.id));
     let price = 0;
     const temp = cartSelect?.map((e) => {
-      price += e.quantity * e.price;
+      price += e.quantity * (e.price - e?.sale);
     });
     return price;
   }, [checkList]);
 
+  const handleCheckOut = () => {
+    if (checkList?.length === 0) {
+      setShowAlert(true);
+      setShowSnackbar(true);
+    }
+    else {
+      setOpenCheckoutModal(true);
+    }
+  };
 
   return (
     <>
@@ -129,6 +157,7 @@ function Cart(props) {
                 <div className="text-price">Price</div>
               </div>
             </div>
+            {console.log("check cart :", cart?.items)}
             <div className="cart-body">
               {cart?.items?.map((e) => {
                 return (
@@ -168,7 +197,19 @@ function Cart(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="text-price">{e?.price * e?.quantity}</div>
+                    <div className="text-price">
+                      <span>${(e?.price - e?.sale) * e?.quantity}</span>
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          fontWeight: "400",
+                          color: "#666",
+                          textDecoration: "line-through",
+                        }}
+                      >
+                        ${e?.sale * e?.quantity}
+                      </span>
+                    </div>
                   </div>
                 );
               })}
@@ -184,7 +225,7 @@ function Cart(props) {
                 <div className="text">GrandTotal</div>
                 <div className="value">{handleTotalPrice}</div>
               </div>
-              <Button onClick={() => setOpenCheckoutModal(true)}>
+              <Button onClick={() => handleCheckOut()}>
                 Checkout
               </Button>
             </div>
@@ -195,9 +236,16 @@ function Cart(props) {
       </div>
       {openCheckoutModal ? (
         <CheckoutModal
+          checkList={checkList}
+          handleTotalPrice={handleTotalPrice}
           open={openCheckoutModal}
           handleClose={() => setOpenCheckoutModal(false)}
         />
+      ) : null}
+      {showAlert ? (
+        <CustomSnackbar>
+          <Alert severity="error">Please select service before paying</Alert>
+        </CustomSnackbar>
       ) : null}
     </>
   );

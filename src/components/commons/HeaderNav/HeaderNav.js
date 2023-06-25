@@ -60,6 +60,11 @@ function HeaderNav(props) {
     history.push("/");
   };
 
+  const handleProfile = () => {
+    history.push("/profile");
+  };
+
+
   const renderDropdown = () => {
     return (
       <div className="dropdown-wrapper">
@@ -73,7 +78,7 @@ function HeaderNav(props) {
   const renderDropdownAccount = () => {
     return (
       <div className="dropdown-account-wrapper">
-        <div>Profile</div>
+        <div onClick={() => handleProfile()}>Profile</div>
         <div onClick={() => handleLogout()}>Logout</div>
       </div>
     );
