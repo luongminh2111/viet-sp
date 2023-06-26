@@ -8,8 +8,6 @@ function PaginationCommon(props) {
   const dispatch = useDispatch();
 
   const handleChangeFilterPage = (newPage) => {
-    console.log("Check new Page : ", newPage);
-    console.log("Check type : ", type);
     switch (type) {
       case "blog": {
         dispatch({

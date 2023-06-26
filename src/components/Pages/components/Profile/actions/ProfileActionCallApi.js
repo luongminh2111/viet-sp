@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 import { BASE_URL } from "../../../../../contains/config";
 import callApi from "../../../../../ulti/callApi";
 
@@ -9,7 +10,11 @@ export const getUserById = () => (dispatch, getState) => {
       userId
     }
   }} = getState();
-  const url = `${BASE_URL}/api/user/get/${userId}`;
+  let id = userId;
+  if(!id) {
+    id = jwt_decode(JSON.stringify(sessionStorage.getItem("token")))?.id;
+  }
+  const url = `${BASE_URL}/api/user/get/${id}`;
   const options = {
     method: 'GET'
   }
@@ -36,9 +41,8 @@ export const updateProfile = (model) => (dispatch, getState) => {
   }
 
   return callApi(url, options).then((res) => {
-    if (res?.data) {
-      console.log("check res.data :", res.data);
-      return res?.data;
+    if (res) {
+      return res;
     }
   });
 };
@@ -57,9 +61,8 @@ export const updatePassword = (model) => (dispatch, getState) => {
   }
 
   return callApi(url, options).then((res) => {
-    if (res?.data) {
-      console.log("check res.data :", res.data);
-      return res?.data;
+    if (res) {
+      return res;
     }
   });
 };
