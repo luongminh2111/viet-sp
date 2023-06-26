@@ -44,3 +44,73 @@
     border-bottom: 3px solid #4caf50;
   }
 }
+.profile-wrapper .order-container {
+  margin-top: 20px;
+}
+
+.profile-wrapper .order-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.profile-wrapper .order-item-image {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.profile-wrapper .order-item-details {
+  flex-grow: 1;
+}
+
+.profile-wrapper .order-item-name {
+  font-weight: bold;
+}
+
+.profile-wrapper .order-item-price {
+  margin-top: 5px;
+}
+
+.profile-wrapper .order-item-category {
+  font-size: 12px;
+  color: #777;
+}
+
+.profile-wrapper .order-item-sale {
+  font-weight: bold;
+  color: #ff0000;
+  margin-top: 5px;
+}
+
+.profile-wrapper .order-item-quantity {
+  margin-top: 5px;
+}
+
+.profile-wrapper .order-item-status {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #007bff;
+}
+.order-item-image img {
+  width: inherit;
+  height: inherit;
+}
+.dialog-result {
+  .title-result {
+    font-weight: 500;
+    text-align: center;
+    i {
+      font-size: 50px;
+      color: #4caf50;
+    }
+  }
+  .text-send-mail {
+    font-weight: 400;
+    font-size: 14px;
+  }
+}

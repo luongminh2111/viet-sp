@@ -3,7 +3,7 @@ import HeaderNav from "../../../../commons/HeaderNav/HeaderNav";
 import "../styles/Detail.scss";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Footer from "../../../../HomePage/Footer";
 import {
@@ -11,11 +11,12 @@ import {
 } from "../../../../commons/actions/actionCommons";
 import { Button } from "@mui/material";
 import { getTourDetailItem } from "../actions/ListTourActionCallApi";
+import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 
 function ItemTourDetail(props) {
   const [item, setItem] = useState({});
   const history = useHistory();
-
+  const cartId = useSelector((state) => state.cart?.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,6 +27,18 @@ function ItemTourDetail(props) {
     });
   }, []);
 
+  const handleAddCartItem = (e) => {
+    console.log(cartId);
+    const cartModel = {
+      cartId: cartId,
+      categoryName: "tour",
+      categoryId: e?.id,
+      name: e?.name,
+      price: Number(e?.price),
+      quantity: 1,
+    };
+    dispatch(addCartItem(cartModel));
+  };
   return (
     <div className="hotel-detail-wrapper">
       <HeaderNav />
@@ -69,7 +82,7 @@ function ItemTourDetail(props) {
                       </div>
                     </div>
                     <div>
-                      <Button variant="container">Add to Cart</Button>
+                      <Button variant="container" onClick={() => handleAddCartItem(item)}>Add to Cart</Button>
                     </div>
                   </div>
                 </div>

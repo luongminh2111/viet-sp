@@ -6,7 +6,7 @@ const initState = {
   deals: [],
   filter: {
     page: 1,
-    limit: 20,
+    limit: 21,
     total: 20,
     priceStart: 0,
     priceEnd: 0,

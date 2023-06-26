@@ -85,7 +85,7 @@ function Blog(props) {
           })}
         </div>
       </div>
-      <PaginationCommon filter={filter} type="blog"/>
+      <PaginationCommon filter={filter} type="blog" />
       <hr />
       <Footer />
     </div>

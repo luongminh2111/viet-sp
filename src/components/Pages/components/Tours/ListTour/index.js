@@ -16,7 +16,7 @@ import { getListFilterHotel } from "../../Hotels/actions/ListHotelActionCallApi"
 function ListTour(props) {
   const items = useSelector((state) => state.tour.items);
   const filter = useSelector((state) => state.tour.filter);
-  const cartId = useSelector(state => state.cart?.id);
+  const cartId = useSelector((state) => state.cart?.id);
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -25,14 +25,19 @@ function ListTour(props) {
     dispatch(getListTour(filter));
   }, []);
 
+ 
   useEffect(() => {
     dispatch(getListFilterTour());
-  }, [filter]);
+  }, [filter?.limit, filter?.location, 
+    filter?.priceStart, 
+    filter?.priceEnd, filter?.checkIn,
+     filter?.checkOut, filter?.page]);
 
   const handleShowDetail = (id) => {
     history.push(`/tour/detail/${id}`);
   };
   const handleAddCartItem = (e) => {
+    console.log(cartId);
     const cartModel = {
       cartId: cartId,
       categoryName: "tour",
@@ -72,7 +77,7 @@ function ListTour(props) {
               </div>
               <Button onClick={() => handleAddCartItem(e)}>Add to Cart</Button>
               <div className="rate">
-                {handleEverageStar(e?.reviews)?.map((item) => {
+                {handleEverageStar(e?.reviewsDTOS)?.map((item) => {
                   return (
                     <i
                       className="fa-solid fa-star"
@@ -82,7 +87,7 @@ function ListTour(props) {
                 })}
               </div>
               <div className="point-rate d-flex">
-                <div className="point">{everageStar(e?.reviews)}.0/5.0</div>
+                <div className="point">{everageStar(e?.reviewsDTOS)}.0/5.0</div>
                 <div className="view">( {e?.reviews?.length || 0} review )</div>
               </div>
               <div className="price">
@@ -93,7 +98,7 @@ function ListTour(props) {
           );
         })}
       </div>
-      <Pagination filter={filter} />
+      <Pagination filter={filter} type="tour" />
     </div>
   );
 }

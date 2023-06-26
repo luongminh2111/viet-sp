@@ -1,5 +1,5 @@
 
-export const handleEverageStar = (review) => {
+export const handleEverageStar = (review ) => {
   if(review?.length === 0){
     return [];
   }
@@ -10,7 +10,7 @@ export const handleEverageStar = (review) => {
 }
 
 
-export const everageStar = (review) => {
+export const everageStar = (review ) => {
   if(review?.length === 0){
     return 0;
   }

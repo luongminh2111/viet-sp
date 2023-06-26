@@ -8,7 +8,7 @@ export const getListHotel = (filter) => dispatch => {
     method: 'GET'
   }
 
-  const url = `${BASE_URL}/api/hotel/list_pagination?pageNumber=${filter.page}&pageSize=${filter.limit}`;
+  const url = `${BASE_URL}/api/hotel/list_pagination_dto?pageNumber=${filter.page}&pageSize=${filter.limit}`;
   
   return callApi(url, options).then(res => {
     if(res?.data){

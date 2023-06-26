@@ -3,7 +3,10 @@ import "../styles/ListHotel.scss";
 import Pagination from "../../../../commons/Pagination";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListHotel, getListFilterHotel } from "../actions/ListHotelActionCallApi";
+import {
+  getListHotel,
+  getListFilterHotel,
+} from "../actions/ListHotelActionCallApi";
 import { useHistory } from "react-router-dom";
 import {
   everageStar,
@@ -16,8 +19,8 @@ function ListHotel(props) {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  
-  const cartId = useSelector(state => state.cart?.id);
+
+  const cartId = useSelector((state) => state.cart?.id);
 
   const items = useSelector((state) => state.hotel.items);
 
@@ -28,24 +31,28 @@ function ListHotel(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getListFilterHotel());
-  }, [filter]);
+      dispatch(getListFilterHotel());
+  }, [filter?.limit, filter?.location, 
+    filter?.priceStart, 
+    filter?.priceEnd, filter?.checkIn,
+     filter?.checkOut, filter?.page]);
 
   const handleShowDetail = (id) => {
     history.push(`/hotel/detail/${id}`);
   };
 
   const handleAddCartItem = (e) => {
+    console.log(cartId);
     const cartModel = {
       cartId: cartId,
-      categoryName: 'hotel',
+      categoryName: "hotel",
       categoryId: e?.id,
       name: e?.name,
       price: Number(e?.price),
       quantity: 1,
-    }
+    };
     dispatch(addCartItem(cartModel));
-  }
+  };
 
   return (
     <div className="list-hotel-wrapper">
@@ -63,7 +70,7 @@ function ListHotel(props) {
       <div className="list-items">
         {items?.map((e) => {
           return (
-            <div className="hotel-item" >
+            <div className="hotel-item">
               <div className="image" onClick={() => handleShowDetail(e.id)}>
                 <img src={e.image}></img>
                 <div className="location d-flex">
@@ -72,11 +79,10 @@ function ListHotel(props) {
                   </div>
                   <div className="text">{e?.description}</div>
                 </div>
-                
               </div>
               <Button onClick={() => handleAddCartItem(e)}>Add to Cart</Button>
               <div className="rate">
-                {handleEverageStar(e?.reviews)?.map((item) => {
+                {handleEverageStar(e?.reviewsDTOS)?.map((item) => {
                   return (
                     <i
                       className="fa-solid fa-star"
@@ -86,7 +92,7 @@ function ListHotel(props) {
                 })}
               </div>
               <div className="point-rate d-flex">
-                <div className="point">{everageStar(e?.reviews)}.0/5.0</div>
+                <div className="point">{everageStar(e?.reviewsDTOS)}.0/5.0</div>
                 <div className="view">( {e?.reviews?.length || 0} review )</div>
               </div>
               <div className="price">
@@ -96,7 +102,7 @@ function ListHotel(props) {
           );
         })}
       </div>
-      <Pagination filter={filter} />
+      <Pagination filter={filter} type="hotel"/>
     </div>
   );
 }

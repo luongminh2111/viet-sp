@@ -7,7 +7,7 @@ export const getListVehicle = (filter) => dispatch => {
   const options = {
     method: 'GET'
   }
-  const url = `${BASE_URL}/api/vehicle/list_pagination?pageNumber=${filter.page}&pageSize=${filter.limit}`;
+  const url = `${BASE_URL}/api/vehicle/list_pagination_dto?pageNumber=${filter.page}&pageSize=${filter.limit}`;
   
   return callApi(url, options).then(res => {
     if(res?.data){

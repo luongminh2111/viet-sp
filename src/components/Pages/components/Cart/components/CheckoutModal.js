@@ -10,20 +10,38 @@ import {
 import React, { useMemo } from "react";
 import { useState } from "react";
 import "../styles/CheckoutModal.scss";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCart, deleteCartItem } from "../../Cart/actions/CartActionCallApi";
+import { initCart, getCartByUser } from "../../../actions/AccountActionCallApi";
 
 function CheckoutModal(props) {
-  const { open, handleClose, checkList, handleTotalPrice } = props;
+  const { open, handleClose, checkList, handleTotalPrice, unCheckList } = props;
   const [openResult, setOpenResult] = useState(false);
-
+  const cartId = useSelector(state => state.cart?.id);
   const items = useSelector((state) => state.cart?.items);
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth.account);
 
   const itemsSelect = useMemo(() => {
     return items?.filter((e) => checkList?.includes(e.id));
   }, [checkList, items]);
-  console.log("itemsSelect : ", itemsSelect);
-  const handlePayment = () => {
+
+  const handlePayment = (totalPrice) => {
     setOpenResult(true);
+
+    unCheckList?.map((e) => {
+      console.log(e);
+      dispatch(deleteCartItem(e));
+    });
+    const cartModel = {
+      userId: auth.userId,
+      priceTotal: totalPrice,
+      paymentMethod: "CASH DELIVERY",
+      status: "PROCESS",
+    }
+    dispatch(updateCart(cartId, cartModel));
+    dispatch(initCart(auth.userId));
+    dispatch(getCartByUser(auth.userId));
   };
 
   const handleCloseModal = () => {
@@ -95,7 +113,7 @@ function CheckoutModal(props) {
         >
           Cancel
         </Button>
-        <Button variant="contained" onClick={() => handlePayment()}>
+        <Button variant="contained" onClick={() => handlePayment(handleTotalPrice)}>
           Confirm payment
         </Button>
       </DialogActions>

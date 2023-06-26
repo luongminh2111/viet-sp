@@ -22,6 +22,48 @@ export const getUserById = () => (dispatch, getState) => {
   });
 };
 
+export const updateProfile = (model) => (dispatch, getState) => {
+
+  const {auth: {
+    account: {
+      userId
+    }
+  }} = getState();
+  const url = `${BASE_URL}/api/user/update/info/${userId}`;
+  const options = {
+    method: 'PUT',
+    data: JSON.stringify(model)
+  }
+
+  return callApi(url, options).then((res) => {
+    if (res?.data) {
+      console.log("check res.data :", res.data);
+      return res?.data;
+    }
+  });
+};
+
+export const updatePassword = (model) => (dispatch, getState) => {
+
+  const {auth: {
+    account: {
+      userId
+    }
+  }} = getState();
+  const url = `${BASE_URL}/api/user/update/password/${userId}`;
+  const options = {
+    method: 'PUT',
+    data: JSON.stringify(model)
+  }
+
+  return callApi(url, options).then((res) => {
+    if (res?.data) {
+      console.log("check res.data :", res.data);
+      return res?.data;
+    }
+  });
+};
+
 export const getListOrderedByUser = () => (dispatch, getState) => {
 
   const {auth: {

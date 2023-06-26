@@ -19,6 +19,7 @@ import CheckoutModal from "./CheckoutModal";
 function Cart(props) {
   const [checkAll, setCheckAll] = useState(false);
   const [checkList, setCheckList] = useState([]);
+  const [unCheckList, setUnCheckList] = useState([]);
   const [openCheckoutModal, setOpenCheckoutModal] = useState(false);
 
   const cart = useSelector((state) => state.cart);
@@ -112,6 +113,8 @@ function Cart(props) {
   }, [checkList]);
 
   const handleCheckOut = () => {
+    const c = (cart?.items?.map((e) => e.id)).filter((id) => !checkList.includes(id));
+    setUnCheckList(c.filter((id) => !checkList.includes(id)));
     if (checkList?.length === 0) {
       setShowAlert(true);
       setShowSnackbar(true);
@@ -240,6 +243,7 @@ function Cart(props) {
           handleTotalPrice={handleTotalPrice}
           open={openCheckoutModal}
           handleClose={() => setOpenCheckoutModal(false)}
+          unCheckList={unCheckList}
         />
       ) : null}
       {showAlert ? (

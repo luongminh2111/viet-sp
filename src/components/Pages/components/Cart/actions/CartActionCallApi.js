@@ -13,6 +13,18 @@ export const addCartItem = (cartModel) => dispatch =>{
   })
 }
 
+export const updateCart = (cartId, cartModel) => dispatch =>{
+  const url = `${BASE_URL}/api/cart/put/${cartId}`;
+  const options = {
+    method: 'PUT',
+    data: JSON.stringify(cartModel)
+  }
+
+  return callApi(url, options).then(res => {
+    console.log("check res?.data : ", res?.data);
+  })
+}
+
 export const getCartItems = (cartId) => dispatch => {
   const url = `${BASE_URL}/api/cart/getItems/${cartId}`;
   const options = {
