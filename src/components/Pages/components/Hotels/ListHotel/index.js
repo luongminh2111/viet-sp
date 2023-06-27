@@ -62,11 +62,18 @@ function ListHotel(props) {
     dispatch(addCartItem(cartModel));
   };
 
+  const handleClearFilter = () => {
+    dispatch({
+      type: "RESET_FILTER_HOTEL"
+    });
+    dispatch(getListHotel(filter));
+  }
+
   return (
     <div className="list-hotel-wrapper">
       <div className="title">
         <div className="text">Hotel: {items?.length || 0} results found</div>
-        <div className="filter-icons"></div>
+        <div className="filter-reset" onClick={() => handleClearFilter()}>Clear filter</div>
       </div>
       <div className="nav-link-filter">
         <div className="nav-item" onClick={() => handleChangeSortType('popularity')}>popularity</div>

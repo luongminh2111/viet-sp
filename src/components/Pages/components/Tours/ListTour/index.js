@@ -64,11 +64,18 @@ function ListTour(props) {
     dispatch(addCartItem(cartModel));
   };
 
+  const handleClearFilter = () => {
+    dispatch({
+      type: "RESET_FILTER_TOUR"
+    });
+    dispatch(getListTour(filter));
+  }
+
   return (
     <div className="list-tour-wrapper">
       <div className="title">
         <div className="text">Tour: {items?.length || 0} results found</div>
-        <div className="filter-icons"></div>
+        <div className="filter-reset" onClick={() => handleClearFilter()}>Clear filter</div>
       </div>
       <div className="nav-link-filter">
         <div

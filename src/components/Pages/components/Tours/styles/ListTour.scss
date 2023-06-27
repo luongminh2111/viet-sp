@@ -6,6 +6,25 @@
     height: 40px;
     font-size: 21px;
     font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    .filter-reset {
+      cursor: pointer;
+      font-weight: 500;
+      width: max-content;
+      padding: 4px 12px;
+      font-size: 14px;
+      height: 32px;
+      border: 1px solid #d3d5d7;
+      border-radius: 4px;
+      color: #FF4d4d;
+      border-color: #FF4d4d;
+      &:hover {
+        background: #FF4d4d;
+        color: #FFF;
+      }
+    }
+
   }
   .nav-link-filter {
     display: flex;

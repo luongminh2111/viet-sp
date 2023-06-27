@@ -53,11 +53,18 @@ function ListVehicle(props) {
     dispatch(addCartItem(cartModel));
   }
 
+  const handleClearFilter = () => {
+    dispatch({
+      type: "RESET_FILTER_VEHICLE"
+    });
+    dispatch(getListVehicle(filter));
+  }
+
   return (
       <div className="list-vehicle-wrapper">
         <div className="title">
           <div className="text">Vehicle: {items?.length || 0} results found</div>
-          <div className="filter-icons"></div>
+          <div className="filter-reset" onClick={() => handleClearFilter()}>Clear filter</div>
         </div>
         <div className="nav-link-filter">
         <div className="nav-item" onClick={() => handleChangeSortType('popularity')}>popularity</div>
