@@ -35,10 +35,18 @@ function ListHotel(props) {
   }, [filter?.limit, filter?.location, 
     filter?.priceStart, 
     filter?.priceEnd, filter?.checkIn,
-     filter?.checkOut, filter?.page]);
+     filter?.checkOut, filter?.page, filter?.sortTypes]);
 
   const handleShowDetail = (id) => {
     history.push(`/hotel/detail/${id}`);
+  };
+
+  const handleChangeSortType = (value) => {
+    dispatch({
+      type: "CHANGE_FILTER_HOTEL",
+      key: "sortType",
+      data: value,
+    });
   };
 
   const handleAddCartItem = (e) => {
@@ -61,11 +69,11 @@ function ListHotel(props) {
         <div className="filter-icons"></div>
       </div>
       <div className="nav-link-filter">
-        <div className="nav-item">popularity</div>
-        <div className="nav-item">guest rating</div>
-        <div className="nav-item">latest</div>
-        <div className="nav-item">Price: low to hight</div>
-        <div className="nav-item">Price: hight to low</div>
+        <div className="nav-item" onClick={() => handleChangeSortType('popularity')}>popularity</div>
+        <div className="nav-item" onClick={() => handleChangeSortType('rating')}>guest rating</div>
+        <div className="nav-item" onClick={() => handleChangeSortType('latest')}>latest</div>
+        <div className="nav-item" onClick={() => handleChangeSortType('low to hight')}>Price: low to hight</div>
+        <div className="nav-item" onClick={() => handleChangeSortType('hight to low')}>Price: hight to low</div>
       </div>
       <div className="list-items">
         {items?.map((e) => {

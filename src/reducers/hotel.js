@@ -13,6 +13,7 @@ const initState = {
     location :'',
     checkIn: '',
     checkOut: '',
+    sortType: '',
   }
 };
 

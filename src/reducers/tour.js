@@ -12,7 +12,8 @@ const initState = {
     priceEnd: 0,
     location :'',
     checkIn: '',
-    checkOut: ''
+    checkOut: '',
+    sortType: '',
   }
 };
 

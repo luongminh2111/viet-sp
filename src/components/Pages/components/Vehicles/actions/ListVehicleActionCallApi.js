@@ -52,6 +52,9 @@ export const getListFilterVehicle = () => (dispatch, getState) => {
   if(filter?.checkOut){
     url = url + `&checkOut=${filter.checkOut}`;
   }
+  if(filter?.sortType){
+    url = url + `&sortType=${filter.sortType}`;
+  }
 
   return callApi(url, options).then(res => {
     if(res?.data){
