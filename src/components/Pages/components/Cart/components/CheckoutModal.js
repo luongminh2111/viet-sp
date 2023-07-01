@@ -87,7 +87,7 @@ function CheckoutModal(props) {
   return (
     <Dialog open={open} className="dialog-checkout" maxWidth="lg">
       <DialogTitle className="checkout-title">
-        <Typography className="text-align-center">Lựa chọn của bạn</Typography>
+        <Typography className="text-align-center">LỰA CHỌN CỦA BẠN</Typography>
       </DialogTitle>
       <DialogContent>
         <div className="contents d-flex justify-content-between">
