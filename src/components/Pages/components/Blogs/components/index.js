@@ -63,7 +63,7 @@ function Blog(props) {
                   className="view-detail"
                   onClick={() => handleShowDetail(e?.id)}
                 >
-                  <span>Show detail >>></span>
+                  <span>Hiển thị chi tiết >>></span>
                 </div>
               </div>
             );
@@ -73,7 +73,7 @@ function Blog(props) {
           <div className="title">Categories</div>
           <div className={`category-item`} key={99} onClick={() => handleChangeFilter('category', '')}>
             <span>>></span>
-            <span>All blog</span>
+            <span>Tất cả bài viết</span>
           </div>
           {categories?.map((e, index) => {
             return (

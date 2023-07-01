@@ -6,11 +6,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getTourTrendingItems } from "../../Pages/components/Tours/actions/ListTourActionCallApi";
 import { getHotelTrendingItems } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
-import { getVehicleTrendingItems } from "../../Pages/components/Vehicles/actions/ListVehicleActionCallApi";
 import { handleEverageStar } from "../../commons/actions/actionCommons";
 
 
-const listTitle = ["Tour", "Hotel", "Vehicle"];
+const listTitle = ["Tour", "Khách sạn"];
 
 function Trending(props) {
 
@@ -19,14 +18,12 @@ function Trending(props) {
 
   const trendingHotelItems = useSelector(state => state.hotel.trendingItems);
   const trendingTourItems = useSelector(state => state.tour.trendingItems);
-  const trendingVehicleItems = useSelector(state => state.vehicle.trendingItems);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTourTrendingItems());
     dispatch(getHotelTrendingItems());
-    dispatch(getVehicleTrendingItems());
   }, []);
 
   useEffect(() => {
@@ -39,11 +36,9 @@ function Trending(props) {
     if(curType === 'Tour'){
       setItems(trendingTourItems);
     }
-    else if(curType === 'Hotel'){
+    else if(curType === 'Khách sạn'){
       setItems(trendingHotelItems);
-    } else {
-      setItems(trendingVehicleItems);
-    }
+    } 
   }, [curType]);
 
   const handleChangeCurType = (type) => {
@@ -53,7 +48,7 @@ function Trending(props) {
   return (
     <div className="trending-content">
       <div className="trending-wrapper">
-        <div className="title d-flex justify-content-center">Trending</div>
+        <div className="title d-flex justify-content-center">Đang là xu hướng</div>
         <div className="divide-1"></div>
         <div className="list-title">
           {listTitle?.map((e, index) => {

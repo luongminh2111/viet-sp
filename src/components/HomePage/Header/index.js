@@ -11,8 +11,8 @@ function Header (props) {
     <div className="header-wrapper">
       <HeaderNav handleOpenRegisterForm={handleOpenRegisterForm} handleOpenLoginForm={handleOpenLoginForm} />
       <div className="slogan">
-        <div className="content">Let's The World Together!</div>
-        <div className="sub-content">Find awesome hotel, tour, car and activities in London</div>
+        <div className="content">Cùng du lịch Việt Nam với VietTravel nào !</div>
+        <div className="sub-content">Tìm khách sạn và các tour tuyệt vời tại VietTravel nhé !</div>
       </div>
       <Search />
     </div>

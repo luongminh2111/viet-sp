@@ -18,7 +18,6 @@ const initState = {
 };
 
 const tour = (state = initState, action) => {
-  console.log("check tour action :", action);
 
   switch (action.type) {
     case actionTypeTour.UPDATE_LIST_TOUR:

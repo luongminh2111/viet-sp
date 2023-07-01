@@ -9,7 +9,7 @@ function TopDestination(props) {
   return (
     <div className="top-destination">
       <div className="destination-wrapper">
-        <div className="title d-flex justify-content-center">Top Destination</div>
+        <div className="title d-flex justify-content-center">Điểm đến hàng đầu</div>
         <div className="divide-1"></div>
         <div className="list-destination">
           {items?.map((e, index) => {
@@ -19,14 +19,14 @@ function TopDestination(props) {
                 <div className="divide"></div>
                 <div className="services">
                   <div className="hotel">
-                    {e?.totalHotel} Hotels
+                    {e?.totalHotel} Khách sạn
                   </div>
                   <div className="tour">
                     {e?.totalTour} Tour
                   </div>
-                  <div className="vehicle">
+                  {/* <div className="vehicle">
                     {e?.totalVehicle} Vehicle
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );

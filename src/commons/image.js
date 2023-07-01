@@ -1,3 +1,3 @@
-export const bannerHeader = "https://mytour.webtravel.vn/images/img1-2.jpeg";
+export const bannerHeader = "https://wallpapercrafter.com/desktop1/587699-mountains-travel-8k-boat-rest-Vietnam-4k-Ha.jpg";
 
-export const bannerTravelTip = "https://mytour.webtravel.vn/images/travel-trip.jpeg";
+export const bannerTravelTip = "https://img.freepik.com/premium-vector/welcome-to-vietnam-skyline-with-gray-buildings-and-blue-sky-vector-illustration-tourism-concept-with-historic-architecture-vietnam-cityscape-with-landmarks-hanoi-ho-chi-minh-haiphong-da-nang_119523-5907.jpg?w=2000";

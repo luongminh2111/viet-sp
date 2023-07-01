@@ -39,12 +39,12 @@ function BlogDetail(props) {
       <div className="blog-detail-content-wrapper">
         <div className="bread-scrum d-flex">
           <div className="text" onClick={() => history.push("/")}>
-            Home >{" "}
+            Trang chủ >{" "}
           </div>
           <div className="text" onClick={() => history.push("/blog")}>
-            Blog
+            Bài viết
           </div>
-          <div className="text">> Detail </div>
+          <div className="text">> Chi tiết </div>
         </div>
         <hr />
         <div className="containers">
@@ -72,7 +72,7 @@ function BlogDetail(props) {
                 </div>
                 <div className="single-hotel__description border-bottom">
                   <h5 className="text-dark font-weight-bold description-title">
-                    Description
+                    Mô tả
                   </h5>
                   <div className="description">
                     <div className="d-block d-md-flex flex-horizontal-center font-size-14 text-gray-1 sub-description">

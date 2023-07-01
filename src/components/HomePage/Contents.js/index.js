@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import { getDestinationItems, getTourTrending, getVehicleTrending } from "../actions/actionCallApi";
 import { getHotelDeal } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
 import { getTourDeals } from "../../Pages/components/Tours/actions/ListTourActionCallApi";
-import { getVehicleDealItems } from "../../Pages/components/Vehicles/actions/ListVehicleActionCallApi";
 
 function Contents(props){
 
@@ -22,7 +21,6 @@ function Contents(props){
     dispatch(getVehicleTrending());
     dispatch(getHotelDeal());
     dispatch(getTourDeals());
-    dispatch(getVehicleDealItems());
   }, []);
 
   return (

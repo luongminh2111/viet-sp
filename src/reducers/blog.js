@@ -12,7 +12,6 @@ const initState = {
 };
 
 const blog = (state = initState, action) => {
-  console.log("check action blog :", action);
   switch (action.type) {
     case 'ADD_LIST_BLOG': 
     return {

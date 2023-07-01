@@ -15,6 +15,11 @@ export const everageStar = (review ) => {
     return 0;
   }
   let temp = 0;
-  const arrTemp = review?.map(e => temp += e.star);
-  return arrTemp;
+  const arrTemp = review?.map(e => temp += e.rate);
+  return temp / review?.length;
+}
+
+export const handleConvertArr = (number) => {
+  const arr = Array(...Array(parseInt(number)).keys());
+  return arr;
 }

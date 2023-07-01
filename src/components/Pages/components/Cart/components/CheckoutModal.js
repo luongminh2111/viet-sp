@@ -55,15 +55,15 @@ function CheckoutModal(props) {
         <DialogTitle >
           <Box className="title-result">
             <i class="fa-sharp fa-solid fa-circle-check"></i>
-            <p>Thanks for your order </p>
+            <p>Cảm ơn vì đã chọn chúng tôi cho chuyến đi của bạn </p>
           </Box>
           <Box className="text-send-mail">
-            The order confirmation has been send to your email
+          Xác nhận thông tin đã được gửi đến email của bạn
           </Box>
 
         </DialogTitle>
         <DialogActions className="d-flex justify-content-center">
-          <Button color="error" onClick={() => handleCloseModal()}>Close</Button>
+          <Button color="error" onClick={() => handleCloseModal()}>Đóng</Button>
         </DialogActions>
       </Dialog>
     );
@@ -76,7 +76,7 @@ function CheckoutModal(props) {
   return (
     <Dialog open={open} className="dialog-checkout">
       <DialogTitle className="checkout-title">
-        <Typography className="text-align-center">Your order</Typography>
+        <Typography className="text-align-center">Lựa chọn của bạn</Typography>
       </DialogTitle>
       <DialogContent>
         <Box className="list-items">
@@ -99,7 +99,7 @@ function CheckoutModal(props) {
         </Box>
         <Box className="total-price">
           <Box>
-            <Box className="text">GrandTotal</Box>
+            <Box className="text">Tổng tiền</Box>
             <Box className="value">${handleTotalPrice}</Box>
           </Box>
         </Box>
@@ -111,10 +111,10 @@ function CheckoutModal(props) {
           onClick={() => handleClose()}
           sx={{ marginRight: "16px" }}
         >
-          Cancel
+          Thoát
         </Button>
         <Button variant="contained" onClick={() => handlePayment(handleTotalPrice)}>
-          Confirm payment
+          Xác nhận thanh toán
         </Button>
       </DialogActions>
     </Dialog>

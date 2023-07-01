@@ -7,6 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useRef } from "react";
 import { useEffect } from "react";
+import logo from "./logo.png";
 
 function HeaderNav(props) {
   const { handleOpenLoginForm, handleOpenRegisterForm } = props;
@@ -68,7 +69,7 @@ function HeaderNav(props) {
   const renderDropdown = () => {
     return (
       <div className="dropdown-wrapper">
-        <div onClick={() => handleRedirectPage("blog")}>Blog</div>
+        <div onClick={() => handleRedirectPage("blog")}>Bài viết</div>
         <div>About us</div>
         <div>Contact us</div>
       </div>
@@ -78,8 +79,8 @@ function HeaderNav(props) {
   const renderDropdownAccount = () => {
     return (
       <div className="dropdown-account-wrapper">
-        <div onClick={() => handleProfile()}>Profile</div>
-        <div onClick={() => handleLogout()}>Logout</div>
+        <div onClick={() => handleProfile()}>Thông tin cá nhân</div>
+        <div onClick={() => handleLogout()}>Đăng xuất</div>
       </div>
     );
   };
@@ -150,10 +151,10 @@ function HeaderNav(props) {
             </div>
           ) : (
             <>
-              <div className="login" onClick={() => handleOpenLoginForm()}>
+              <div style={{fontWeight: "500"}} className="login" onClick={() => handleOpenLoginForm()}>
                 Đăng nhập
               </div>
-              <div
+              <div style={{fontWeight: "500"}}
                 className="register"
                 onClick={() => handleOpenRegisterForm()}
               >
@@ -164,13 +165,18 @@ function HeaderNav(props) {
         </div>
       </div>
       <div className="nav-bar-bottom">
-        <div className="nav-bar left">My Travel</div>
+        <div className="nav-bar left">
+          <img style={{width: "50px"}} src={logo}/>
+          VietTravel
+          </div>
         <div className="nav-bar right">
-          <div onClick={() => history.push("")}>Home</div>
-          <div onClick={() => handleRedirectPage("hotel")}>Hotel</div>
+          <div onClick={() => history.push("")}>Trang chủ</div>
+          <div onClick={() => handleRedirectPage("hotel")}>Khách sạn</div>
           <div onClick={() => handleRedirectPage("tour")}>Tour</div>
-          <div onClick={() => handleRedirectPage("vehicle")}>Vehicle</div>
-          <div
+          {/* <div onClick={() => handleRedirectPage("vehicle")}>Vehicle</div> */}
+          <div onClick={() => handleRedirectPage("blog")}>Bài viết</div>
+          <div style={{width: "100px"}} onClick={() => handleRedirectPage("")}>Về chúng tôi</div>
+          {/* <div
             className="div-page"
             ref={pageRef}
             onClick={() => setShowDropDown(!showDropDown)}
@@ -182,7 +188,7 @@ function HeaderNav(props) {
               </span>
             </div>
             {showDropDown ? renderDropdown() : null}
-          </div>
+          </div> */}
           <div className="shopping" onClick={() => handleRedirectPage("cart")}>
           <i class="fa-solid fa-cart-shopping" style={{fontSize: '20px'}}></i>
           </div>
@@ -190,7 +196,7 @@ function HeaderNav(props) {
       </div>
       {showAlert ? (
         <CustomSnackbar>
-          <Alert severity="error">An error occurred, please login first</Alert>
+          <Alert severity="error">Đã xảy ra lỗi, vui lòng đăng nhập trước</Alert>
         </CustomSnackbar>
       ) : null}
     </div>

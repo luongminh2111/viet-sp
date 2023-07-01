@@ -7,39 +7,39 @@ function Footer(props) {
       <div className="footer-content d-flex">
         <div>
           <div className="contact-wrapper">
-            <div className="title">Need My Travel Help?</div>
-            <div>Got Questions ? Call us 24/7! Call Us: (024) 2242 0777</div>
-            <div className="font-weight-600">Contact Info</div>
+            <div className="title">Cần Hỗ Trợ?</div>
+            <div>Có câu hỏi? Gọi cho chúng tôi 24/7! Số điện thoại: (024) 2242 0777</div>
+            <div className="font-weight-600">Thông tin liên hệ</div>
             <div>Toà B1, Đại học Bách Khoa Hà Nội</div>
           </div>
           <div className="company-wrapper">
-            <div className="title">Company</div>
-            <div>About us</div>
-            <div>Careers</div>
-            <div>Terms of Use</div>
-            <div>Privacy Statement</div>
-            <div>Give Us Feedbacks</div>
+            <div className="title">Công ty</div>
+            <div>Về chúng tôi</div>
+            <div>Cơ hội nghề nghiệp</div>
+            <div>Điều khoản sử dụng</div>
+            <div>Chính sách bảo mật</div>
+            <div>Gửi phản hồi cho chúng tôi</div>
           </div>
           <div className="other-service-wrapper">
-            <div className="title">Other Services</div>
-            <div>Investor Relations</div>
-            <div>Rewards Program</div>
+            <div className="title">Dịch vụ khác</div>
+            <div>Quan hệ cổ đông</div>
+            <div>Chương trình thưởng</div>
             <div>PointsPLUS</div>
-            <div>Partners</div>
-            <div>List My Hotel</div>
+            <div>Đối tác</div>
+            <div>Đăng ký khách sạn của tôi</div>
           </div>
           <div className="support-wrapper">
-            <div className="title">Support</div>
-            <div>Account</div>
-            <div>Legal</div>
-            <div>Legal</div>
-            <div>Affiliate Program</div>
-            <div>Privacy Policy</div>
+            <div className="title">Hỗ trợ</div>
+            <div>Tài khoản</div>
+            <div>Quy định</div>
+            <div>Quy định</div>
+            <div>Chương trình liên kết</div>
+            <div>Chính sách bảo mật</div>
           </div>
           <div className="mail-list">
-            <div className="title">Mailing List</div>
+            <div className="title">Danh sách thư</div>
             <div>
-              Sign up for our mailing list to get latest updates and offers.{" "}
+              Đăng ký danh sách thư của chúng tôi để nhận cập nhật và ưu đãi mới nhất.
             </div>
           </div>
         </div>
@@ -47,8 +47,9 @@ function Footer(props) {
       <div className="mt-5 mb-5">
         <hr />
       </div>
-      <div className="d-flex justify-content-center mb-4"><p>&copy; 2023 YourTour.com by Pham Tuan Viet</p></div>
+      <div className="d-flex justify-content-center mb-4"><p>&copy; 2023 VietTravel.com.vn by Phạm Tuấn Việt</p></div>
     </div>
   );
 }
+
 export default Footer;

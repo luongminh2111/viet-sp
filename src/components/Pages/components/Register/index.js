@@ -51,7 +51,7 @@ function Register(props) {
   const handleChangeMail = (value) => {
     if (handleValidateEmail(value)) {
       setErrorMail(true);
-      setMessageMail("Email is not in the correct format");
+      setMessageMail("Email không đúng định dạng");
     } else {
       setErrorMail(false);
       setMessageMail("");
@@ -62,7 +62,7 @@ function Register(props) {
   const handleChangePass = (value) => {
     if (value?.length < 6) {
       setErrorPass(true);
-      setMessagePass("Password must not be less than 6 characters");
+      setMessagePass("Mật khẩu không được ít hơn 6 ký tự");
     } else {
       setErrorPass(false);
       setMessagePass("");
@@ -81,7 +81,7 @@ function Register(props) {
   const handleChangePhone = ( value ) => {
     if((value?.length < 10 && value?.length > 11) || handleValidatePhone(value)){
       setErrorPhone(true);
-      setMessagePhone("Phone number is not in the correct format")
+      setMessagePhone("Số điện thoại không đúng định dạng")
     } else {
       setErrorPhone(false);
       setMessagePhone("");
@@ -92,7 +92,7 @@ function Register(props) {
   const handleChangeConfirmPass = (value) => {
     if (value !== password) {
       setErrorConfirmPass(true);
-      setMessageConfirmPass("Password does not match");
+      setMessageConfirmPass("Mật khẩu không hợp lệ");
     } else {
       setErrorConfirmPass(false);
       setMessageConfirmPass("");
@@ -110,7 +110,7 @@ function Register(props) {
   const handleChangeUserName = (value) => {
     if(value?.length === 0){
       setErrorUserName(true);
-      setMessageUserName("Username cannot be blank");
+      setMessageUserName("Tên người dùng không thể để trống");
     } else {
       setErrorUserName(false);
       setMessageUserName('');
@@ -121,22 +121,22 @@ function Register(props) {
   const handleRegister = () => {
     if (email?.length === 0) {
       setErrorMail(true);
-      setMessageMail("Email cannot be blank");
+      setMessageMail("Email không được để trống");
       return;
     }
     if (username?.length === 0) {
       setErrorUserName(true);
-      setMessageUserName("Username cannot be blank");
+      setMessageUserName("Tên người dùng không thể để trống");
       return;
     }
     if(phoneNumber?.length === 0) {
       setErrorPhone(true);
-      setMessagePhone("Phone number cannot be blank");
+      setMessagePhone("Số điện thoại không được để trống");
       return;
     }
     if (password?.length === 0) {
       setErrorPass(true);
-      setMessagePass("Password cannot be blank");
+      setMessagePass("Mật khẩu không được để trống");
       return;
     } 
     if (!errorConfirmPass && !errorMail && !errorPass && !errorPhone && !errorUserName) {
@@ -181,7 +181,7 @@ function Register(props) {
           <Box className="register-form">
             <Box className="row">
               <Box className="username form-input">
-                <Box className="txt-label">Username</Box>
+                <Box className="txt-label">Tên đăng nhập</Box>
                 <TextField
                   variant="outlined"
                   error={errorUserName}
@@ -201,7 +201,7 @@ function Register(props) {
             </Box>
             <Box className="row">
               <Box className="password form-input">
-                <Box className="txt-label">Password</Box>
+                <Box className="txt-label">Mật khẩu</Box>
                 <TextField
                   type="password"
                   error={errorPass}
@@ -211,7 +211,7 @@ function Register(props) {
                 />
               </Box>
               <Box className="phone form-input">
-                <Box className="txt-label">Phone number</Box>
+                <Box className="txt-label">Số điện thoại</Box>
                 <TextField
                   variant="outlined"
                   error={errorPhone}
@@ -222,7 +222,7 @@ function Register(props) {
             </Box>
             <Box className="row">
               <Box className="password-confirm form-input">
-                <Box className="txt-label">Confirm password</Box>
+                <Box className="txt-label">Nhập lại mật khẩu</Box>
                 <TextField
                   type="password"
                   error={errorConfirmPass}
@@ -254,12 +254,12 @@ function Register(props) {
             duplicate ? (
               <CustomSnackbar>
                 <Alert severity="error">
-                Account registration failed, please try again
+                Đăng ký tài khoản không thành công, vui lòng thử lại
                 </Alert>
               </CustomSnackbar>
             ) : (
               <CustomSnackbar>
-                <Alert severity="success">Successful account registration</Alert>
+                <Alert severity="success">Đăng ký tài khoản thành công</Alert>
               </CustomSnackbar>
             )
           ) : null}

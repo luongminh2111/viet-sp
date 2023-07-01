@@ -133,7 +133,7 @@ function Cart(props) {
           <div className="cart-table">
             <div className="cart-header">
               <div className="header_top">
-                <div className="text-cart">Cart</div>
+                <div className="text-cart">Giỏ hàng</div>
                 <div
                   className="text-action"
                   onClick={() => handleDeleteAllCartItem()}
@@ -141,7 +141,7 @@ function Cart(props) {
                   <span>
                     <i class="fa-solid fa-trash"></i>
                   </span>
-                  <span>Remove</span>
+                  <span>Xóa</span>
                 </div>
               </div>
               <div className="header_bottom">
@@ -156,8 +156,8 @@ function Cart(props) {
                     label="Product"
                   />
                 </div>
-                <div className="text-quantity">Quantity</div>
-                <div className="text-price">Price</div>
+                <div className="text-quantity">Số lượng</div>
+                <div className="text-price">Giá</div>
               </div>
             </div>
             {console.log("check cart :", cart?.items)}
@@ -196,7 +196,7 @@ function Cart(props) {
                           <span>
                             <i class="fa-solid fa-trash"></i>
                           </span>
-                          <span>Remove</span>
+                          <span>Xóa</span>
                         </div>
                       </div>
                     </div>
@@ -219,17 +219,17 @@ function Cart(props) {
             </div>
           </div>
           <div className="checkout-box">
-            <div className="total">
+            {/* <div className="total">
               <div className="text">Subtotal</div>
               <div className="value">{handleTotalPrice}</div>
-            </div>
+            </div> */}
             <div className="checkout">
               <div>
-                <div className="text">GrandTotal</div>
+                <div className="text">Tổng tiền</div>
                 <div className="value">{handleTotalPrice}</div>
               </div>
               <Button onClick={() => handleCheckOut()}>
-                Checkout
+                Thanh toán
               </Button>
             </div>
           </div>
@@ -248,7 +248,7 @@ function Cart(props) {
       ) : null}
       {showAlert ? (
         <CustomSnackbar>
-          <Alert severity="error">Please select service before paying</Alert>
+          <Alert severity="error">Vui lòng chọn dịch vụ trước khi thanh toán</Alert>
         </CustomSnackbar>
       ) : null}
     </>

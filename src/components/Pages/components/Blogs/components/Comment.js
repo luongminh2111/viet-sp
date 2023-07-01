@@ -40,10 +40,10 @@ function Comment(props) {
   return (
     <div className="comment-wrapper">
       <div className="comment-form">
-        <div className="title-1">Your comments</div>
+        <div className="title-1">Bình luận của bạn</div>
 
         <div className="title-2">
-          Your email address will not be published. Required fields are marked *
+        Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *
         </div>
         <div className="comment-area">
           <textarea id="input-comment" name="w3review" maxLength={2000} type="text" onChange={(e) => handleChangeContent(e.target.value)}>
@@ -51,7 +51,7 @@ function Comment(props) {
           </textarea>
          
         </div>
-        <Button onClick={() => handlePostComment()}>Post Comment</Button>
+        <Button onClick={() => handlePostComment()}>Đăng bình luận</Button>
       </div>
     </div>
   );

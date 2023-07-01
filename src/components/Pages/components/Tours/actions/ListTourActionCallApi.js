@@ -35,8 +35,8 @@ export const getListFilterTour = () => (dispatch, getState) => {
 
   let url = `${BASE_URL}/api/tour/filter?pageNumber=${filter.page}&pageSize=${filter.limit}`;
   
-  if(filter?.location){
-    url = url + `&location=${filter.location}`;
+  if(filter?.name){
+    url = url + `&name=${filter.name}`;
   }
   if(filter?.sale){
     url = url + `&sale=${filter.sale}`;

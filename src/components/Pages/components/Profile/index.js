@@ -61,12 +61,12 @@ function Profile(props) {
             </div>
             <div className="order-item-details">
               <div className="order-item-name">{order.name}</div>
-              <div className="order-item-price">Price: {order.price}</div>
-              <div className="order-item-sale">Sale: {order.price}</div>
+              <div className="order-item-price">Giá: {order.price}</div>
+              <div className="order-item-sale">Giá sale: {order.price-order.price*order.sale/100}</div>
               <div className="order-item-quantity">
-                Quantity: {order.quantity}
+                Số lượng: {order.quantity}
               </div>
-              <div className="order-item-status">Status: {order.status}</div>
+              <div className="order-item-status">Trạng thái: {order.status}</div>
             </div>
           </div>
         ))}
@@ -134,19 +134,19 @@ function Profile(props) {
                   className={`text-header-right ${tab === 1 ? "active" : ""}`}
                   onClick={() => handleChangeTab(1)}
                 >
-                  Profile Settings
+                  Hồ sơ người dùng
                 </h4>
                 <h4
                   className={`text-header-right ${tab === 3 ? "active" : ""}`}
                   onClick={() => handleChangeTab(3)}
                 >
-                  Update Password
+                 Cập nhật mật khẩu
                 </h4>
                 <h4
                   className={`text-header-right ${tab === 2 ? "active" : ""}`}
                   onClick={() => handleChangeTab(2)}
                 >
-                  Orders History
+                  Lịch sử
                 </h4>
               </div>
               {tab === 1 ? (
@@ -157,23 +157,23 @@ function Profile(props) {
                       type="text"
                       className="form-control mb-3"
                       disabled
-                      placeholder="first name"
+                      placeholder="Vui lòng nhập email của bạn !"
                       value={user?.email}
                     />
-                    <label className="labels mb-2">Username</label>
+                    <label className="labels mb-2">Tên đăng nhập</label>
                     <input
                       type="text"
                       className="form-control mb-3"
                       disabled
-                      placeholder="full name"
+                      placeholder="Vui lòng nhập tên người dùng của bạn !"
                       value={username}
                     />
                     <div className="col-md-12">
-                      <label className="labels">Full name</label>
+                      <label className="labels">Họ và tên</label>
                       <input
                         type="text"
                         className="form-control mb-3"
-                        placeholder="first name"
+                        placeholder="Vui lòng nhập tên của bạn !"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                       />
@@ -181,21 +181,21 @@ function Profile(props) {
                   </div>
                   <div className="row mt-3">
                     <div className="col-md-12">
-                      <label className="labels">Phone Number</label>
+                      <label className="labels">Số điện thoại</label>
                       <input
                         type="text"
                         className="form-control mb-3"
-                        placeholder="enter phone number"
+                        placeholder="Vui lòng nhập số điện thoại của bạn !"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
                     <div className="col-md-12">
-                      <label className="labels">Address</label>
+                      <label className="labels">Địa chỉ</label>
                       <input
                         type="text"
                         className="form-control mb-3"
-                        placeholder="enter address line 1"
+                        placeholder="Vui lòng nhập địa chỉ của bạn !"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
@@ -207,7 +207,7 @@ function Profile(props) {
                       type="button"
                       onClick={handleSaveProfile}
                     >
-                      Save Profile
+                      Lưu
                     </button>
                   </div>
                 </div>
@@ -226,33 +226,33 @@ function Profile(props) {
                       type="text"
                       className="form-control mb-3"
                       disabled
-                      placeholder="first name"
+                      placeholder="Vui lòng nhập email của bạn !"
                       value={user?.email}
                     />
-                    <label className="labels mb-2">Username</label>
+                    <label className="labels mb-2">Tên người dùng</label>
                     <input
                       type="text"
                       className="form-control mb-3"
                       disabled
-                      placeholder="full name"
+                      placeholder="Vui lòng nhập tên người dùng của bạn !"
                       value={username}
                     />
                     <div className="col-md-12">
-                      <label className="labels">Password</label>
+                      <label className="labels">Mật khẩu</label>
                       <input
                         type="password"
                         className="form-control mb-3"
-                        placeholder="enter current password"
+                        placeholder="Vui lòng nhập mật khẩu của bạn !"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
                     <div className="col-md-12">
-                      <label className="labels">New Password</label>
+                      <label className="labels">Mật khẩu mới</label>
                       <input
                         type="password"
                         className="form-control mb-3"
-                        placeholder="enter new password"
+                        placeholder="Vui lòng nhập mật khẩu mới của bạn !"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                       />
@@ -264,7 +264,7 @@ function Profile(props) {
                       type="button"
                       onClick={handleSavePassword}
                     >
-                      Update Password
+                     Cập nhật mật khẩu
                     </button>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ function Profile(props) {
           <DialogTitle>
             <Box className="title-result">
               <i className="fa-sharp fa-solid fa-circle-check"></i>
-              <p className="mt-3">Update successfully</p>
+              <p className="mt-3">Cập nhật thành công.</p>
             </Box>
           </DialogTitle>
           <DialogActions className="d-flex justify-content-center">
@@ -293,7 +293,7 @@ function Profile(props) {
           <DialogTitle>
             <Box className="title-result">
               <i className="fa-sharp fa-solid fa-circle-check" style={{color : '#ff4d4d'}}></i>
-              <p className="mt-3">Update failed. Please try again.</p>
+              <p className="mt-3">Cập nhật không thành công. Vui lòng thử lại.</p>
             </Box>
           </DialogTitle>
           <DialogActions className="d-flex justify-content-center">

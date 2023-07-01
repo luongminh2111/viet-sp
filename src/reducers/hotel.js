@@ -18,7 +18,6 @@ const initState = {
 };
 
 const hotel = (state = initState, action) => {
-  console.log("check hotel action :", action);
   switch (action.type) {
     case actionTypeHotel.UPDATE_LIST_HOTEL:
       return {

@@ -3,7 +3,6 @@ const initState = {
 };
 
 const cart = (state = initState, action) => {
-  console.log("check cart action : ", action);
   switch (action.type) {
     case "UPDATE_CART_PROPERTIES":
       return {

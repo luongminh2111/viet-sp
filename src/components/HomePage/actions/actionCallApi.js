@@ -31,6 +31,20 @@ export const getTourTrending = () => dispatch => {
   });
 };
 
+export const search = (type, name) => dispatch => {
+  const options = {
+    method: 'GET'
+  }
+
+  const url =  `${BASE_URL}/api/${type}/search/${name}`;
+
+  return axios.get(url, options).then(res => {
+    if(res?.data){
+      dispatch(updateTourTrending(res.data));
+    }
+  });
+};
+
 
 export const getVehicleTrending = () => dispatch => {
   const options = {

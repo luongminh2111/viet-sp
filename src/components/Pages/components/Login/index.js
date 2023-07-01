@@ -46,10 +46,10 @@ function Login(props) {
   const handleChangePass = (value) => {
     if (value.length === 0) {
       setErrorPass(true);
-      setMessagePass("Password cannot be blank");
+      setMessagePass("Mật khẩu không được để trống");
     } else if (value?.length < 6) {
       setErrorPass(true);
-      setMessagePass("Password must not be less than 6 characters");
+      setMessagePass("Mật khẩu không được ít hơn 6 ký tự");
     } else {
       setErrorPass(false);
       setMessagePass("");
@@ -60,7 +60,7 @@ function Login(props) {
   const handleChangeUsername = (value) => {
     if (value.length === 0) {
       setErrorUsername(true);
-      setMessageUsername("Username cannot be blank");
+      setMessageUsername("Tên người dùng không thể để trống");
     } else {
       setErrorUsername(false);
       setMessageUsername("");
@@ -71,10 +71,10 @@ function Login(props) {
   const handleLogin = () => {
     if (username?.length === 0) {
       setErrorUsername(true);
-      setMessageUsername("Username cannot be blank");
+      setMessageUsername("Tên người dùng không thể để trống");
     } else if (password?.length === 0) {
       setErrorPass(true);
-      setMessagePass("Password cannot be blank");
+      setMessagePass("Mật khẩu không được để trống");
     } else if (!errorUsername && !errorPass) {
       const loginRequest = {
         username: username,
@@ -115,7 +115,7 @@ function Login(props) {
     <div className="login-container">
       <Box className="login-form">
         <Box className="username form-input">
-          <Box className="txt-label">Username</Box>
+          <Box className="txt-label">Tên người dùng</Box>
           <TextField
             type="text"
             variant="outlined"
@@ -126,7 +126,7 @@ function Login(props) {
           />
         </Box>
         <Box className="password form-input">
-          <Box className="txt-label">Password</Box>
+          <Box className="txt-label">Mật khẩu</Box>
           <TextField
             type="password"
             error={errorPass}

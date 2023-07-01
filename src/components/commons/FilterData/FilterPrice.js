@@ -5,12 +5,14 @@ import "../styles/FilterData/FilterPrice.scss";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 
+const nf = new Intl.NumberFormat('en');
+
 function FilterPrice(props) {
 
   const { type } = props;
 
   const dispatch = useDispatch();
-  const [value, setValue] = useState([0, 30]);
+  const [value, setValue] = useState([0, 100]);
 
   const valuetext = (value) => {
     return `${value}$`;
@@ -24,14 +26,14 @@ function FilterPrice(props) {
     dispatch({
       type: `CHANGE_FILTER_${typeValue}`,
       key: "priceStart",
-      data: value * 10,
+      data: value * 100000,
     });
   }
   const handleChangePriceEnd = (value, typeValue) => {
     dispatch({
       type: `CHANGE_FILTER_${typeValue}`,
       key: "priceEnd",
-      data: value * 10,
+      data: value * 100000,
     });
   }
   const handleChangeFilter = () => {
@@ -57,11 +59,11 @@ function FilterPrice(props) {
   };
   return (
     <div className="filter-price-range">
-      <div className="label">Price Ranger($) </div>
+      <div className="label">Phạm vi giá tiền </div>
       <div className="value mb-2">
-        <span>${value[0] * 10}</span>
+        <span>{nf.format(value[0] * 100000)}đ</span>
         &nbsp; - &nbsp;
-        <span>${value[1] * 10}</span>
+        <span>{nf.format(value[1] * 100000)}đ</span>
       </div>
       <Slider
         getAriaLabel={() => "Temperature range"}
@@ -71,7 +73,7 @@ function FilterPrice(props) {
         getAriaValueText={valuetext}
       />
       <div className="d-flex justify-content-center mt-4 mb-2">
-        <Button variant="contained" onClick={() => handleChangeFilter()}>Search</Button>
+        <button  onClick={() => handleChangeFilter()}>Tìm kiếm</button>
       </div>
 
     </div>

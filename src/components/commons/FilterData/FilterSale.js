@@ -76,7 +76,7 @@ function FilterSale(props) {
                     onChange={(e) => handleSelectRadio(e)}
                   />
                 }
-                label={`${e.value}$`}
+                label={`${e.value}%`}
               />
             </div>
           );
