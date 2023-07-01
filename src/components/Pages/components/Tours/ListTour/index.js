@@ -77,6 +77,7 @@ function ListTour(props) {
       categoryName: "tour",
       categoryId: e?.id,
       name: e?.name,
+      // price: Number(e?.price * (100 - e?.sale) / 100),
       price: Number(e?.price),
       quantity: 1,
     };

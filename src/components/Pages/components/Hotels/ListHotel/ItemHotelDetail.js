@@ -30,14 +30,14 @@ function ItemHotelDetail(props) {
       setItem(res);
     });
   }, []);
-  console.log("check item : ", item);
+  
   const handleAddCartItem = (e) => {
-    console.log(cartId);
     const cartModel = {
       cartId: cartId,
-      categoryName: "tour",
+      categoryName: "room",
       categoryId: e?.id,
       name: e?.name,
+      // price: Number(e?.price * (100 - e?.sale) / 100),
       price: Number(e?.price),
       quantity: 1,
     };
@@ -98,7 +98,7 @@ function ItemHotelDetail(props) {
                 ) : null}
               </div>
               <div className="btn-add">
-                <button onClick={() => {}}>Đặt ngay</button>
+                <button onClick={() => handleAddCartItem(e)}>Đặt ngay</button>
               </div>
             </div>
           </div>
@@ -186,14 +186,14 @@ function ItemHotelDetail(props) {
                         <div>{item?.description}</div>
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <Button
                         variant="container"
                         onClick={() => handleAddCartItem(item)}
                       >
                         Thêm vào giỏ hàng
                       </Button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="pb-4 mb-2">

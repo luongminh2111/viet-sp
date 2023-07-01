@@ -106,11 +106,11 @@ function ListHotel(props) {
               <div className="text">{e?.name}</div>
             </div>
           </div>
-          <div className="btn">
+          {/* <div className="btn">
             <Button onClick={() => handleAddCartItem(e)}>
               Thêm vào giỏ hàng
             </Button>
-          </div>
+          </div> */}
           <div className="rate">
             {handleConvertArr(Number(e?.star) || 0)?.map((item) => {
               return (
@@ -198,9 +198,9 @@ function ListHotel(props) {
                   </div>
                 ) : null}
               </div>
-              <div className="btn-add">
+              {/* <div className="btn-add">
                 <button onClick={() => handleAddCartItem(e)}>Đặt ngay</button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

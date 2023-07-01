@@ -121,6 +121,7 @@
                 color: #0088ff;
                 &:first-child {
                   margin-right: 6px;
+                  display: flex;
                   align-items: center;
                   i {
                     font-weight: 700;
@@ -129,6 +130,8 @@
                 &:nth-child(2) {
                   font-weight: 700;
                   min-width: 90px;
+                  display: flex;
+                  align-items: center;
                 }
                 &:last-child {
                   margin-left: 10px;

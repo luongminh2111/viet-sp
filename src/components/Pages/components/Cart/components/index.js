@@ -16,6 +16,8 @@ import {
 import { useHistory } from "react-router-dom";
 import CheckoutModal from "./CheckoutModal";
 
+const nf = new Intl.NumberFormat("en");
+
 function Cart(props) {
   const [checkAll, setCheckAll] = useState(false);
   const [checkList, setCheckList] = useState([]);
@@ -113,13 +115,14 @@ function Cart(props) {
   }, [checkList]);
 
   const handleCheckOut = () => {
-    const c = (cart?.items?.map((e) => e.id)).filter((id) => !checkList.includes(id));
+    const c = cart?.items
+      ?.map((e) => e.id)
+      .filter((id) => !checkList.includes(id));
     setUnCheckList(c.filter((id) => !checkList.includes(id)));
     if (checkList?.length === 0) {
       setShowAlert(true);
       setShowSnackbar(true);
-    }
-    else {
+    } else {
       setOpenCheckoutModal(true);
     }
   };
@@ -200,18 +203,27 @@ function Cart(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="text-price">
-                      <span>${(e?.price - e?.sale) * e?.quantity}</span>
-                      <span
-                        style={{
+                    <div className="text-price d-block text-align-end">
+                      {console.log("check e :", e)}
+                      <div  style={{
                           marginLeft: "10px",
                           fontWeight: "400",
                           color: "#666",
-                          textDecoration: "line-through",
+                          textDecoration: e?.sale ? "line-through" : '',
+                        }}>{nf.format(e?.price * e?.quantity)} VNĐ
+                      </div>
+
+                      {e?.sale ? 
+                      <div
+                        style={{
+                          marginLeft: "10px",
+                          fontWeight: "400",
+                          color: "#Ff4d4d",
                         }}
                       >
-                        ${e?.sale * e?.quantity}
-                      </span>
+                        {nf.format(e?.price * (100 - e?.sale) / 100 * e?.quantity)} VNĐ
+                      </div>
+                     : null }
                     </div>
                   </div>
                 );
@@ -228,9 +240,7 @@ function Cart(props) {
                 <div className="text">Tổng tiền</div>
                 <div className="value">{handleTotalPrice}</div>
               </div>
-              <Button onClick={() => handleCheckOut()}>
-                Thanh toán
-              </Button>
+              <Button onClick={() => handleCheckOut()}>Thanh toán</Button>
             </div>
           </div>
         </div>
@@ -248,7 +258,9 @@ function Cart(props) {
       ) : null}
       {showAlert ? (
         <CustomSnackbar>
-          <Alert severity="error">Vui lòng chọn dịch vụ trước khi thanh toán</Alert>
+          <Alert severity="error">
+            Vui lòng chọn dịch vụ trước khi thanh toán
+          </Alert>
         </CustomSnackbar>
       ) : null}
     </>
