@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React from "react";
 import HeaderNav from "../../../../commons/HeaderNav/HeaderNav";
 import "../styles/Detail.scss";
@@ -28,9 +29,10 @@ function ItemHotelDetail(props) {
     const id = path?.split("/hotel/detail/")?.[1];
     dispatch(getHotelDetailItem(id)).then((res) => {
       setItem(res);
+      console.log("check res :", res);
     });
   }, []);
-  
+
   const handleAddCartItem = (e) => {
     const cartModel = {
       cartId: cartId,
@@ -111,9 +113,11 @@ function ItemHotelDetail(props) {
     return (
       <div className="item">
         <div className="type">
-          <span style={{marginRight: '8px'}}>
+          <span style={{ marginRight: "8px" }}>
             {id === 1 ? <i class="fa-solid fa-house-flag"></i> : null}
-            {id === 2 ? <i class="fa-solid fa-house-medical-circle-check"></i> : null}
+            {id === 2 ? (
+              <i class="fa-solid fa-house-medical-circle-check"></i>
+            ) : null}
             {id === 3 ? <i class="fa-solid fa-house-user"></i> : null}
             {id === 4 ? <i class="fa-solid fa-hotel"></i> : null}
             {id === 5 ? <i class="fa-solid fa-bowl-food"></i> : null}
@@ -137,6 +141,12 @@ function ItemHotelDetail(props) {
         </div>
       </div>
     );
+  };
+
+  const handleChangeText = (text) => {
+    console.log("Check text :", text);
+    console.log("Check replaceAll :", text?.replaceAll(" ", "%20"));
+    return text?.replaceAll(" ", "%20");
   };
 
   return (
@@ -204,56 +214,209 @@ function ItemHotelDetail(props) {
                     Mô tả
                   </h5>
                   <div className="description">{item?.description}</div>
-                  <div className="list-room">{renderListRoom()}</div>
-                  <div className="benefit-title">
-                    Tiện ích chung
+
+                  <div className="policy d-flex mt-4">
+                    <div
+                      className="label-1 success "
+                      style={{ minWidth: "fit-content", color: "#0088FF" }}
+                    >
+                      <span style={{ marginRight: "12px" }}>
+                        <i class="fa-solid fa-circle-check"></i>
+                      </span>
+                      <span>Chính sách lưu trú</span>
+                    </div>
+                    <div className="list-desc">
+                      <ul>
+                        {item?.rules?.map((e) => (
+                          <li>
+                            {e?.title} - {e?.description}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+                  <div
+                    className="list-landmark mt-4 mb-3"
+                    style={{
+                      border: "1px solid #d3d5d7",
+                      padding: "16px 24px",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <div
+                      className="label mb-3"
+                      style={{
+                        fontSize: "18px",
+                        fontWeight: "600",
+                        color: "#0088FF",
+                      }}
+                    >
+                      Thông tin khu vực
+                    </div>
+                    <div className="contents d-flex">
+                      <div className="maps">
+                        <iframe
+                          src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.1147952503716!2d105.84028307498075!3d21.02809228062099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1ca9d23345%3A0xac4a8a5947723e1f!2s${handleChangeText(
+                            item?.name
+                          )}!5e0!3m2!1svi!2s!4v1688257380036!5m2!1svi!2s`}
+                          width="350"
+                          height="300"
+                          style={{ borderRadius: "16px" }}
+                          allowfullscreen=""
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                      </div>
+                      <div
+                        className="area-vicinity "
+                        style={{
+                          marginLeft: "60px",
+                          width: "calc(100% - 360px)",
+                        }}
+                      >
+                        <div
+                          className="label"
+                          style={{ fontWeight: "700", fontSize: "18px" }}
+                        >
+                          Các địa điểm lân cận
+                        </div>
+                        {item?.landmarks?.map((e) => {
+                          return (
+                            <div className="name d-flex justify-content-between mt-1 mb-2">
+                              <div style={{ fontWeight: "500" }}>{e?.name}</div>
+                              <div>{e?.distance}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="list-review">
+                    <div
+                      className="label mb-2"
+                      style={{
+                        color: "#555",
+                        fontWeight: "600",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          marginRight: "12px",
+                          color: "orangered",
+                          fontSize: "20px",
+                        }}
+                      >
+                        <i class="fa-solid fa-comments"></i>
+                      </span>
+                      <span>Đánh giá từ người dùng</span>
+                    </div>
+                    {item?.reviews?.map((e) => {
+                      return (
+                        <div
+                          className="review-item mt-4 d-flex"
+                          style={{ marginLeft: "36px" }}
+                        >
+                          <div
+                            className="image"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              borderRadius: "50%",
+                              backgroundSize: "cover",
+                            }}
+                          >
+                            <img src={e?.image}></img>
+                          </div>
+                          <div
+                            className="review-content"
+                            style={{ marginLeft: "16px" }}
+                          >
+                            <div className="name" style={{ fontWeight: "600" }}>
+                              {e?.user?.username}
+                            </div>
+                            <div className="created-at mt-1 mb-1">
+                              {e?.createdAt}
+                            </div>
+                            <div className="rate">
+                              <span
+                                style={{
+                                  background: "#0088FF",
+                                  borderRadius: "4px",
+                                  color: "#fff",
+                                  padding: "1px 8px",
+                                }}
+                              >
+                                {e?.star} / 5
+                              </span>
+                              <span style={{ marginLeft: "12px" }}>
+                                {e?.content}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <hr />
+                  <div className="list-room">{renderListRoom()}</div>
+                  <div className="benefit-title">Tiện ích chung</div>
                   <div className="list-benefit">
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[0].type, 1
+                      hotelBenefits[0].type,
+                      1
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[1].type, 2
+                      hotelBenefits[1].type,
+                      2
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[2].type, 3
+                      hotelBenefits[2].type,
+                      3
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[3].type, 4
+                      hotelBenefits[3].type,
+                      4
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[4].type, 5
+                      hotelBenefits[4].type,
+                      5
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[5].type, 6
+                      hotelBenefits[5].type,
+                      6
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[6].type, 7
+                      hotelBenefits[6].type,
+                      7
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[7].type, 8
+                      hotelBenefits[7].type,
+                      8
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[8].type, 9
+                      hotelBenefits[8].type,
+                      9
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[9].type, 10
+                      hotelBenefits[9].type,
+                      10
                     )}
                     {renderListBenefit(
                       item?.amenityhotels,
-                      hotelBenefits[10].type, 11
+                      hotelBenefits[10].type,
+                      11
                     )}
-              
                   </div>
                 </div>
               </div>

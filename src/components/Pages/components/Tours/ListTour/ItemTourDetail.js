@@ -6,9 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Footer from "../../../../HomePage/Footer";
-import {
-  handleConvertArr,
-} from "../../../../commons/actions/actionCommons";
+import { handleConvertArr } from "../../../../commons/actions/actionCommons";
 import { Button } from "@mui/material";
 import { getTourDetailItem } from "../actions/ListTourActionCallApi";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
@@ -171,6 +169,27 @@ function ItemTourDetail(props) {
                       <span style={{ marginRight: "12px" }}>
                         <i class="fa-solid fa-circle-check"></i>
                       </span>
+                      <span>Lịch trình</span>
+                    </div>
+                    <div className="list-desc">
+                      <ul>
+                        {item?.itineraries
+                          ?.sort((a, b) => {
+                            if (Number(a.day) > Number(b.day)) return 1;
+                            if (Number(a.day) < Number(b.day)) return -1;
+                            return 0;
+                          })
+                          ?.map((e) => (
+                            <li>
+                              {e?.title} - {e?.description}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                    <div className="label-1 primary">
+                      <span style={{ marginRight: "12px" }}>
+                        <i class="fa-solid fa-circle-check"></i>
+                      </span>
                       <span> Bao gồm</span>
                     </div>
                     <div className="list-desc">
@@ -209,6 +228,74 @@ function ItemTourDetail(props) {
                         ))}
                       </ul>
                     </div>
+                  </div>
+                  <hr />
+                  <div className="list-review">
+                    <div
+                      className="label mb-2"
+                      style={{
+                        color: "#555",
+                        fontWeight: "600",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          marginRight: "12px",
+                          color: "orangered",
+                          fontSize: "20px",
+                        }}
+                      >
+                        <i class="fa-solid fa-comments"></i>
+                      </span>
+                      <span>Đánh giá từ người dùng</span>
+                    </div>
+                    {item?.reviews?.map((e) => {
+                      return (
+                        <div
+                          className="review-item mt-4 d-flex"
+                          style={{ marginLeft: "36px" }}
+                        >
+                          <div
+                            className="image"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              borderRadius: "50%",
+                              backgroundSize: "cover",
+                            }}
+                          >
+                            <img src={e?.image}></img>
+                          </div>
+                          <div
+                            className="review-content"
+                            style={{ marginLeft: "16px" }}
+                          >
+                            <div className="name" style={{ fontWeight: "600" }}>
+                              {e?.user?.username}
+                            </div>
+                            <div className="created-at mt-1 mb-1">
+                              {e?.createdAt}
+                            </div>
+                            <div className="rate">
+                              <span
+                                style={{
+                                  background: "#0088FF",
+                                  borderRadius: "4px",
+                                  color: "#fff",
+                                  padding: "1px 8px",
+                                }}
+                              >
+                                {e?.star} / 5
+                              </span>
+                              <span style={{ marginLeft: "12px" }}>
+                                {e?.content}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
