@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getTourTrendingItems } from "../../Pages/components/Tours/actions/ListTourActionCallApi";
 import { getHotelTrendingItems } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
 import { handleEverageStar } from "../../commons/actions/actionCommons";
+import { useHistory } from "react-router-dom";
 
 
 const listTitle = ["Tour", "Khách sạn"];
@@ -20,6 +21,16 @@ function Trending(props) {
   const trendingTourItems = useSelector(state => state.tour.trendingItems);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const handleShowDetail = (e) => {
+    if (e?.code?.includes("TOUR")) {
+      history.push(`/tour/detail/${e.id}`);
+    }
+
+  };
+
 
   useEffect(() => {
     dispatch(getTourTrendingItems());
@@ -60,33 +71,34 @@ function Trending(props) {
           })}
         </div>
         <div className="list-trending">
-          {items?.map((e, index) => {
+          {items?.map((et, index) => {
+          
             return (
-              <div className={`trend-item item-${index}`}>
-                <div className="image">
-                  <img src={e?.image || ''}></img>
+              <div className={`trend-item item-${index}`} onClick={() => handleShowDetail(et)}>
+                <div className="image" >
+                  <img src={et?.image || ''}></img>
                 </div>
                 <div className="trend-content-wrapper">
                   <div className="location d-flex">
                     <div className="location-icon">
                       <i className="fa-solid fa-location-dot fa-xl"></i>
                     </div>
-                    <div className="text">{e?.locationDTO?.description}</div>
+                    <div className="text">{et?.locationDTO?.description}</div>
                   </div>
-                  <div className="tour-name">{e?.name}</div>
+                  <div className="tour-name">{et?.name}</div>
                   <div className="rate d-flex">
                     <div className="rate-star">
-                     {handleEverageStar(e?.reviewsDTOS || [])?.map(e => {
+                     {handleEverageStar(et?.reviewsDTOS || [])?.map(e => {
                       return (<i className="fa-solid fa-star" style={{color: '#b0d12b'}}></i>)
                      })}
                     </div>
-                    <div className="count-view">({e?.reviewsDTOS?.length || 0} view)</div>
+                    <div className="count-view">({et?.reviewsDTOS?.length || 0} view)</div>
                   </div>
                   <div className="time d-flex">
                     <div className="icon-time ">
                       <i className="fa-regular fa-clock"></i>
                     </div>
-                    <div className="text">{getTimeForTrip(e?.timeEnd, e?.timeStart)}</div>
+                    <div className="text">{getTimeForTrip(et?.timeEnd, et?.timeStart)}</div>
                   </div>
                 </div>
               </div>

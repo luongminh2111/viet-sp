@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Footer from "../../../../HomePage/Footer";
 import { handleConvertArr } from "../../../../commons/actions/actionCommons";
-import { Button } from "@mui/material";
 import { getTourDetailItem } from "../actions/ListTourActionCallApi";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 const nf = new Intl.NumberFormat("en");
@@ -15,6 +14,8 @@ function ItemTourDetail(props) {
   const [item, setItem] = useState({});
   const history = useHistory();
   const cartId = useSelector((state) => state.cart?.id);
+  const trendingTour = useSelector((state) => state.tour.trendingItems);
+  const [newId, setNewId] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,6 +25,12 @@ function ItemTourDetail(props) {
       setItem(res);
     });
   }, []);
+
+  useEffect(() => {
+    dispatch(getTourDetailItem(newId)).then((res) => {
+      setItem(res);
+    });
+  }, [newId]);
 
   const handleShowTime = (arr) => {
     const splits = arr?.split(";");
@@ -42,11 +49,17 @@ function ItemTourDetail(props) {
     };
     dispatch(addCartItem(cartModel));
   };
+
+  const handleChangeItem = (value) => {
+    setNewId(value);
+    history.push(`/tour/detail/${value}`);
+  }
+
   return (
-    <div className="hotel-detail-wrapper">
+    <div className="tour-detail-wrapper">
       <HeaderNav />
       <hr />
-      <div className="hotel-detail-content-wrapper">
+      <div className="tour-detail-content-wrapper">
         <div className="bread-scrum d-flex">
           <div className="text" onClick={() => history.push("/")}>
             Trang chủ >{" "}
@@ -59,7 +72,7 @@ function ItemTourDetail(props) {
         <hr />
         <div className="container">
           <div className="row">
-            <div className="col-lg-10 col-xl-9">
+            <div className="col-lg-9 col-xl-8" style={{ marginTop: "30px" }}>
               <div className="product">
                 <div className="pb-4 mb-2">
                   <div className="tour-item">
@@ -298,6 +311,92 @@ function ItemTourDetail(props) {
                     })}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div
+              className="trending col-lg-3 col-xl-4"
+              style={{ padding: "30px" }}
+            >
+              <div
+                className="list-trending"
+                style={{ maxHeight: "800px", overflowY: "auto" }}
+              >
+                <div
+                  className="mt-2 mb-4"
+                  style={{
+                    textAlign: "center",
+                    background: "#0088FF",
+                    color: "#fff",
+                    fontWeight: "600",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  TOUT HOT
+                </div>
+                {trendingTour
+                  ?.map((trending) => {
+                    return (
+                      <>
+                        <div
+                          className="item d-flex mt-2 mb-2"
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            handleChangeItem(trending.id)
+                          }
+                        >
+                          <div
+                            className="image"
+                            style={{ marginRight: "20px" }}
+                          >
+                            <img
+                              src={trending?.image}
+                              width="150px"
+                              height="100px"
+                            ></img>
+                          </div>
+                          <div className="content">
+                            <div
+                              className="name"
+                              style={{ fontSize: "13px", fontWeight: "600" }}
+                            >
+                              {trending?.name}
+                            </div>
+                            <div className="price" style={{ fontSize: "13px" }}>
+                              <div
+                                className={`org-price ${
+                                  trending?.sale > 0
+                                    ? "text-decoration-line-through"
+                                    : ""
+                                }`}
+                              >
+                                Từ {nf.format(trending?.price)} VNĐ
+                              </div>
+                              {trending?.sale ? (
+                                <div
+                                  className="price-sale"
+                                  style={{
+                                    color: "#FF4d4d",
+                                    fontWeight: "600",
+                                  }}
+                                >
+                                  Giảm còn{" "}
+                                  {nf.format(
+                                    (trending?.price * (100 - trending?.sale)) /
+                                      100
+                                  )}{" "}
+                                  VNĐ
+                                </div>
+                              ) : null}
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                      </>
+                    );
+                  })}
               </div>
             </div>
           </div>
