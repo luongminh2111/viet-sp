@@ -13,7 +13,7 @@ const initState = {
     location :'',
     checkIn: '',
     checkOut: '',
-    sortType: '',
+    sortBy: '',
   }
 };
 
@@ -54,7 +54,7 @@ const hotel = (state = initState, action) => {
         location :'',
         checkIn: '',
         checkOut: '',
-        sortType: '',
+        sortBy: '',
       }
     }
     default:

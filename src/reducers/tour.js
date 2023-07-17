@@ -13,7 +13,7 @@ const initState = {
     location :'',
     checkIn: '',
     checkOut: '',
-    sortType: '',
+    sortBy: '',
   }
 };
 
@@ -55,7 +55,7 @@ const tour = (state = initState, action) => {
           location :'',
           checkIn: '',
           checkOut: '',
-          sortType: '',
+          sortBy: '',
         }
       }
     default:

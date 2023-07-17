@@ -16,6 +16,7 @@ import {
 import { Button } from "@mui/material";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { useLocation } from "react-router-dom";
+import { getCartByUser } from "../../../actions/AccountActionCallApi";
 
 const nf = new Intl.NumberFormat("en");
 
@@ -30,11 +31,14 @@ function ListHotel(props) {
 
   const items = useSelector((state) => state.hotel.items);
 
+  const account = useSelector(state => state.auth.account);
+
   const filter = useSelector((state) => state.hotel.filter);
 
   const [showType, setShowType] = useState("all");
 
   useEffect(() => {
+    dispatch(getCartByUser(account?.userId));
     console.log(name);
     if (name) {
       dispatch({
@@ -58,7 +62,7 @@ function ListHotel(props) {
     filter?.checkIn,
     filter?.checkOut,
     filter?.page,
-    filter?.sortType,
+    filter?.sortBy,
     filter?.sale,
   ]);
 
@@ -69,7 +73,7 @@ function ListHotel(props) {
   const handleChangeSortType = (value) => {
     dispatch({
       type: "CHANGE_FILTER_HOTEL",
-      key: "sortType",
+      key: "sortBy",
       data: value,
     });
   };

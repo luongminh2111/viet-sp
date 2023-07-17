@@ -15,16 +15,19 @@ import {
 import { Button } from "@mui/material";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { hotelBenefits } from "../commons/DataCommon";
+import { getCartByUser } from "../../../actions/AccountActionCallApi";
 const nf = new Intl.NumberFormat("en");
 
 function ItemHotelDetail(props) {
   const [item, setItem] = useState({});
   const history = useHistory();
   const cartId = useSelector((state) => state.cart?.id);
+  const account = useSelector(state => state.auth.account);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getCartByUser(account?.userId));
     const path = history.location.pathname;
     const id = path?.split("/hotel/detail/")?.[1];
     dispatch(getHotelDetailItem(id)).then((res) => {
@@ -193,7 +196,7 @@ function ItemHotelDetail(props) {
                       </div>
                       <div className="d-block d-md-flex flex-horizontal-center font-size-14 text-gray-1 sub-description">
                         <i className="fa-solid fa-location-dot mr-2 font-size-20"></i>
-                        <div>{item?.description}</div>
+                        <div>{item?.address}</div>
                       </div>
                     </div>
                     {/* <div>
@@ -291,6 +294,9 @@ function ItemHotelDetail(props) {
                       </div>
                     </div>
                   </div>
+                  
+                  <hr />
+                  <div className="list-room">{renderListRoom()}</div>
                   <div className="list-review">
                     <div
                       className="label mb-2"
@@ -358,8 +364,6 @@ function ItemHotelDetail(props) {
                       );
                     })}
                   </div>
-                  <hr />
-                  <div className="list-room">{renderListRoom()}</div>
                   <div className="benefit-title">Tiện ích chung</div>
                   <div className="list-benefit">
                     {renderListBenefit(

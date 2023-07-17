@@ -29,7 +29,7 @@ function ListVehicle(props) {
   }, [filter?.limit, filter?.location, 
     filter?.priceStart, 
     filter?.priceEnd, filter?.checkIn,
-     filter?.checkOut, filter?.page, filter?.sortType]);
+     filter?.checkOut, filter?.page, filter?.sortBy]);
 
   const handleShowDetail = (id) => {
     history.push(`/vehicle/detail/${id}`);
@@ -37,7 +37,7 @@ function ListVehicle(props) {
   const handleChangeSortType = (value) => {
     dispatch({
       type: "CHANGE_FILTER_VEHICLE",
-      key: "sortType",
+      key: "sortBy",
       data: value,
     });
   };
