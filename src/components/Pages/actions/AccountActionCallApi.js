@@ -7,23 +7,22 @@ import callApi from "../../../ulti/callApi";
 export const register = (registerRequest) => (dispatch) => {
   const url = `${BASE_URL}/api/register`;
 
-  return axios.post(url, registerRequest).then((res) => {
-    if (res.status === 200) {
-      return res?.data;
-    }
-  });
+  return axios.post(url, registerRequest).then(
+    (response) => { return response; },
+    (error) => { return error; },
+  );
 };
 
 export const login = (loginRequest) => (dispatch) => {
   const url = `${BASE_URL}/api/login`;
 
-  return axios.post(url, loginRequest).then((res) => {
-    if (res.status === 200) {
-      if (res?.data?.token) {
-        sessionStorage.setItem("token", res.data.token);
-        const username = jwt_decode(JSON.stringify(res.data.token))?.sub;
-        const id = jwt_decode(JSON.stringify(res.data.token))?.id;
-        const role = jwt_decode(JSON.stringify(res.data.token))?.role;
+  return axios.post(url, loginRequest).then(
+    (response) => {
+      if (response?.data?.token) {
+        sessionStorage.setItem("token", response.data.token);
+        const username = jwt_decode(JSON.stringify(response.data.token))?.sub;
+        const id = jwt_decode(JSON.stringify(response.data.token))?.id;
+        const role = jwt_decode(JSON.stringify(response.data.token))?.role;
         const account = {
           username: username,
           userId: id,
@@ -32,17 +31,14 @@ export const login = (loginRequest) => (dispatch) => {
         dispatch(updateUser(account));
         dispatch(getCartByUser(id));
         // initCart(id);
-        return true;
       }
-      else {
-        console.log("check error: ", res.data);
-      }
-      return false;
-    }
-    else {
-      console.log("check error: ", res.data);
-    }
-  });
+      return response?.data;
+    },
+    (error) => { return error?.response?.data; },
+  );
+
+    
+     
 };
 
 export const initCart = (userId) => (dispatch) => {

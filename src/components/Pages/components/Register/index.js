@@ -5,11 +5,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import { useDispatch } from "react-redux";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import "../styles/Register.scss";
 import { Close } from "@material-ui/icons";
 import { register } from "../../actions/AccountActionCallApi";
+import Alerts from "../../../../commons/Alert";
 
 function Register(props) {
   const { open, handleClose, handleOpenLoginForm } = props;
@@ -28,25 +27,11 @@ function Register(props) {
   const [errorUserName, setErrorUserName] = useState(false);
   const [errorMail, setErrorMail] = useState(false);
   const [errorPhone, setErrorPhone] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [duplicate, setDuplicate] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [textError, setTextError] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
 
   const dispatch = useDispatch();
-
-  const [showSnackbar, setShowSnackbar] = useState(false);
-  const onCloseClickHandler = (event) => {
-    setShowSnackbar(false);
-  };
-
-  const CustomSnackbar = (props) => (
-    <Snackbar
-      autoHideDuration={2000}
-      open={showSnackbar}
-      onClose={onCloseClickHandler}
-      anchorOrigin={{ horizontal: "center", vertical: "top" }}
-      children={props.children}
-    ></Snackbar>
-  );
 
   const handleChangeMail = (value) => {
     if (handleValidateEmail(value)) {
@@ -147,15 +132,16 @@ function Register(props) {
         phone: phoneNumber,
       }
       dispatch(register(registerRequest)).then(json => {
-        if(json){
+        setOpenAlert(true);
+        if(json?.status === 200){
+          setIsSuccess(true);
           setTimeout(() => {
             handleOpenLoginForm();
           }, [2000])
         } else {
-          setDuplicate(true);
+          setIsSuccess(false);
+          setTextError(json?.response?.data?.error);
         }
-        setShowSnackbar(true);
-        setShowAlert(true);
       })
     }
   };
@@ -250,19 +236,10 @@ function Register(props) {
               </Button>
             </Box>
           </Box>
-          {showAlert ? (
-            duplicate ? (
-              <CustomSnackbar>
-                <Alert severity="error">
-                Đăng ký tài khoản không thành công, vui lòng thử lại
-                </Alert>
-              </CustomSnackbar>
-            ) : (
-              <CustomSnackbar>
-                <Alert severity="success">Đăng ký tài khoản thành công</Alert>
-              </CustomSnackbar>
-            )
-          ) : null}
+          {isSuccess && openAlert ? 
+          <Alerts text="Đăng ký thành công!" status="success" open={openAlert} setOpen={setOpenAlert}  /> : null }
+           { !isSuccess && textError?.length > 0  && openAlert ? 
+          <Alerts text={textError} status="error" open={openAlert} setOpen={setOpenAlert} /> : null }
         </div>
       </DialogContent>
     </Dialog>

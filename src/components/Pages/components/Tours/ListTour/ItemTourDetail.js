@@ -9,21 +9,27 @@ import Footer from "../../../../HomePage/Footer";
 import { handleConvertArr } from "../../../../commons/actions/actionCommons";
 import { getTourDetailItem } from "../actions/ListTourActionCallApi";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
+import { getTourTrending } from "../../../../HomePage/actions/actionCallApi";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
+import Alerts from "../../../../../commons/Alert";
 const nf = new Intl.NumberFormat("en");
 function ItemTourDetail(props) {
   const [item, setItem] = useState({});
   const history = useHistory();
+  const account = useSelector(state => state.auth.account);
   const cartId = useSelector((state) => state.cart?.id);
   const trendingTour = useSelector((state) => state.tour.trendingItems);
-  const account = useSelector(state => state.auth.account);
   const [newId, setNewId] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [textError, setTextError] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCartByUser(account?.userId));
     const path = history.location.pathname;
     const id = path?.split("/tour/detail/")?.[1];
+    dispatch(getTourTrending());
     dispatch(getTourDetailItem(id)).then((res) => {
       setItem(res);
     });
@@ -50,7 +56,15 @@ function ItemTourDetail(props) {
       price: Number(e?.price),
       quantity: 1,
     };
-    dispatch(addCartItem(cartModel));
+    dispatch(addCartItem(cartModel)).then((json) => {
+      setOpenAlert(true);
+      if (json?.error) {
+        setIsSuccess(false);
+        setTextError(json?.error);
+      } else {
+        setIsSuccess(true);
+      }
+    });
   };
 
   const handleChangeItem = (value) => {
@@ -406,6 +420,22 @@ function ItemTourDetail(props) {
         </div>
       </div>
       <Footer />
+      {isSuccess && openAlert ? (
+        <Alerts
+          text="Đã thêm vào giỏ hàng"
+          status="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
+      {!isSuccess && textError?.length > 0 && openAlert ? (
+        <Alerts
+          text={textError}
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
     </div>
   );
 }

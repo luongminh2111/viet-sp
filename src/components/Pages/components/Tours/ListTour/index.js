@@ -18,6 +18,7 @@ import { Button } from "@mui/material";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { useLocation } from "react-router-dom";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
+import Alerts from "../../../../../commons/Alert";
 
 const nf = new Intl.NumberFormat("en");
 
@@ -27,7 +28,11 @@ function ListTour(props) {
   const items = useSelector((state) => state.tour.items);
   const filter = useSelector((state) => state.tour.filter);
   const cartId = useSelector((state) => state.cart?.id);
-  const account = useSelector(state => state.auth.account);
+  const account = useSelector((state) => state.auth.account);
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [textError, setTextError] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
 
   const [showType, setShowType] = useState("all");
 
@@ -37,7 +42,6 @@ function ListTour(props) {
 
   useEffect(() => {
     dispatch(getCartByUser(account?.userId));
-    console.log(name);
     if (name) {
       dispatch({
         type: "CHANGE_FILTER_TOUR",
@@ -80,11 +84,18 @@ function ListTour(props) {
       categoryName: "tour",
       categoryId: e?.id,
       name: e?.name,
-      // price: Number(e?.price * (100 - e?.sale) / 100),
       price: Number(e?.price),
       quantity: 1,
     };
-    dispatch(addCartItem(cartModel));
+    dispatch(addCartItem(cartModel)).then((json) => {
+      setOpenAlert(true);
+      if (json?.error) {
+        setIsSuccess(false);
+        setTextError(json?.error);
+      } else {
+        setIsSuccess(true);
+      }
+    });
   };
 
   const handleClearFilter = () => {
@@ -233,7 +244,7 @@ function ListTour(props) {
                 ) : null}
               </div>
               <div className="btn-add">
-                <button  onClick={() => handleAddCartItem(e)}>Đặt ngay</button>
+                <button onClick={() => handleAddCartItem(e)}>Đặt ngay</button>
               </div>
             </div>
           </div>
@@ -296,6 +307,22 @@ function ListTour(props) {
         {showType === "all" ? renderShowAll() : renderShowList()}
       </div>
       <Pagination filter={filter} type="tour" />
+      {isSuccess && openAlert ? (
+        <Alerts
+          text="Đã thêm vào giỏ hàng"
+          status="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
+      {!isSuccess && textError?.length > 0 && openAlert ? (
+        <Alerts
+          text={textError}
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
     </div>
   );
 }

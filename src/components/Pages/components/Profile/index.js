@@ -11,15 +11,8 @@ import {
 } from "./actions/ProfileActionCallApi";
 import { useState } from "react";
 import "./styles/index.scss";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import Alerts from "../../../../commons/Alert";
 
 function Profile(props) {
   const dispatch = useDispatch();
@@ -35,6 +28,7 @@ function Profile(props) {
   const [newPassword, setNewPassword] = useState("");
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
     dispatch(getUserById()).then((res) => {
@@ -62,11 +56,15 @@ function Profile(props) {
             <div className="order-item-details">
               <div className="order-item-name">{order.name}</div>
               <div className="order-item-price">Giá: {order.price}</div>
-              <div className="order-item-sale">Giá sale: {order.price-order.price*order.sale/100}</div>
+              {/* <div className="order-item-sale">
+                Giá sale: {order.price - (order.price * order.sale) / 100}
+              </div> */}
               <div className="order-item-quantity">
                 Số lượng: {order.quantity}
               </div>
-              <div className="order-item-status">Trạng thái: {order.status}</div>
+              <div className="order-item-status">
+                Trạng thái: {order.status}
+              </div>
             </div>
           </div>
         ))}
@@ -75,10 +73,17 @@ function Profile(props) {
   };
 
   const handleSaveProfile = () => {
-    const updatedUser = { ...user, password, newPassword, phone, address, fullName };
+    const updatedUser = {
+      ...user,
+      password,
+      newPassword,
+      phone,
+      address,
+      fullName,
+    };
     dispatch(updateProfile(updatedUser))
       .then((response) => {
-        setShowSuccessPopup(true);
+        setOpenAlert(true);
         if (response?.status === 200) {
           setIsSuccess(true);
         } else {
@@ -86,7 +91,8 @@ function Profile(props) {
         }
       })
       .catch((error) => {
-        setShowSuccessPopup(false);
+        setOpenAlert(true);
+        setIsSuccess(false);
       });
   };
 
@@ -95,7 +101,7 @@ function Profile(props) {
     console.log(updatedUser);
     dispatch(updatePassword(updatedUser))
       .then((response) => {
-        setShowSuccessPopup(true);
+        setOpenAlert(true);
         if (response?.status === 200) {
           setIsSuccess(true);
         } else {
@@ -103,7 +109,7 @@ function Profile(props) {
         }
       })
       .catch((error) => {
-        setShowSuccessPopup(true);
+        setOpenAlert(true);
         setIsSuccess(false);
       });
   };
@@ -140,7 +146,7 @@ function Profile(props) {
                   className={`text-header-right ${tab === 3 ? "active" : ""}`}
                   onClick={() => handleChangeTab(3)}
                 >
-                 Cập nhật mật khẩu
+                  Cập nhật mật khẩu
                 </h4>
                 <h4
                   className={`text-header-right ${tab === 2 ? "active" : ""}`}
@@ -264,7 +270,7 @@ function Profile(props) {
                       type="button"
                       onClick={handleSavePassword}
                     >
-                     Cập nhật mật khẩu
+                      Cập nhật mật khẩu
                     </button>
                   </div>
                 </div>
@@ -274,37 +280,24 @@ function Profile(props) {
         </div>
       </div>
       <hr />
-      {showSuccessPopup ?  isSuccess ? (
-        <Dialog open={showSuccessPopup} className="dialog-result">
-          <DialogTitle>
-            <Box className="title-result">
-              <i className="fa-sharp fa-solid fa-circle-check"></i>
-              <p className="mt-3">Cập nhật thành công.</p>
-            </Box>
-          </DialogTitle>
-          <DialogActions className="d-flex justify-content-center">
-            <Button color="error" onClick={() => {setShowSuccessPopup(false); setIsSuccess(false)}}>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-      ) : (
-        <Dialog open={showSuccessPopup} className="dialog-result">
-          <DialogTitle>
-            <Box className="title-result">
-              <i className="fa-sharp fa-solid fa-circle-check" style={{color : '#ff4d4d'}}></i>
-              <p className="mt-3">Cập nhật không thành công. Vui lòng thử lại.</p>
-            </Box>
-          </DialogTitle>
-          <DialogActions className="d-flex justify-content-center">
-            <Button color="error" onClick={() => {setShowSuccessPopup(false); setIsSuccess(false)}}>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-      ) : null}
-
       <Footer />
+      {openAlert ? (
+        isSuccess ? (
+          <Alerts
+            text="Cập nhật thành công."
+            status="success"
+            open={openAlert}
+            setOpen={setOpenAlert}
+          />
+        ) : (
+          <Alerts
+            text="Cập nhật thất bại, vui lòng thử lại sau."
+            status="error"
+            open={openAlert}
+            setOpen={setOpenAlert}
+          />
+        )
+      ) : null}
     </div>
   );
 }

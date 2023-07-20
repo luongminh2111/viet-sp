@@ -16,9 +16,6 @@ import {
   deleteCartItem,
 } from "../../Cart/actions/CartActionCallApi";
 import { initCart, getCartByUser } from "../../../actions/AccountActionCallApi";
-import QRCodes from "./QRCodes";
-import { useHistory } from "react-router-dom";
-
 
 const nf = new Intl.NumberFormat("en");
 
@@ -28,7 +25,6 @@ function CheckoutModal(props) {
   const cartId = useSelector((state) => state.cart?.id);
   const items = useSelector((state) => state.cart?.items);
   const dispatch = useDispatch();
-  const history = useHistory();
   const auth = useSelector((state) => state.auth.account);
 
   const [email, setEmail] = useState(auth?.email || "");
@@ -59,7 +55,6 @@ function CheckoutModal(props) {
   };
 
   const handleCloseModal = () => {
-    history.push("/");
     setOpenResult(false);
     handleClose();
   };
@@ -146,34 +141,32 @@ function CheckoutModal(props) {
                   <span>
                     <input
                       type="radio"
-                      checked={paymentMethod === "methodCOD"}
-                      onChange={() => setPaymentMethod("methodCOD")}
+                      checked={paymentMethod === "method1"}
+                      onChange={() => setPaymentMethod("method1")}
                     ></input>
                   </span>
-                  <span>Thanh toán COD</span>
+                  <span>Chuyển khoản 1</span>
                 </div>
                 <div className="radio-item">
                   <span>
                     <input
                       type="radio"
-                      checked={paymentMethod === "methodTrasf"}
-                      onChange={() => setPaymentMethod("methodTrasf")}
+                      checked={paymentMethod === "method2"}
+                      onChange={() => setPaymentMethod("method2")}
                     ></input>
                   </span>
-                  <span>Chuyển khoản</span>
+                  <span>Chuyển khoản 2</span>
                 </div>
                 <div className="radio-item">
                   <span>
                     <input
                       type="radio"
-                      checked={paymentMethod === "methodQR"}
-                      onChange={() => setPaymentMethod("methodQR")}
+                      checked={paymentMethod === "method3"}
+                      onChange={() => setPaymentMethod("method3")}
                     ></input>
                   </span>
-                  <span>Thanh toán qua QR code</span>
+                  <span>Chuyển khoản 3</span>
                 </div>
-                {paymentMethod === "methodQR" ? 
-                <QRCodes /> : null}
               </div>
             </div>
           </div>

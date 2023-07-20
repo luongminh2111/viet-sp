@@ -16,8 +16,6 @@ function BlogDetail(props) {
   const [item, setItem] = useState("");
 
   const comments  = useSelector(state => state.blog.comments);
-
-  console.log("check comments :",comments);
   
   const history = useHistory();
 

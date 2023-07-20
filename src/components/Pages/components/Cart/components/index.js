@@ -15,6 +15,7 @@ import {
 } from "../actions/CartActionCallApi";
 import { useHistory } from "react-router-dom";
 import CheckoutModal from "./CheckoutModal";
+import Alerts from "../../../../../commons/Alert";
 
 const nf = new Intl.NumberFormat("en");
 
@@ -23,27 +24,14 @@ function Cart(props) {
   const [checkList, setCheckList] = useState([]);
   const [unCheckList, setUnCheckList] = useState([]);
   const [openCheckoutModal, setOpenCheckoutModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [textAlertSuccess, setTextAlertSuccess] = useState("");
+  const [textAlertError, setTextAlertError] = useState("");
 
   const cart = useSelector((state) => state.cart);
 
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const [showSnackbar, setShowSnackbar] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const onCloseClickHandler = (event) => {
-    setShowSnackbar(false);
-  };
-
-  const CustomSnackbar = (props) => (
-    <Snackbar
-      autoHideDuration={2000}
-      open={showSnackbar}
-      onClose={onCloseClickHandler}
-      anchorOrigin={{ horizontal: "center", vertical: "top" }}
-      children={props.children}
-    ></Snackbar>
-  );
 
   useEffect(() => {
     try {
@@ -76,6 +64,10 @@ function Cart(props) {
 
   const handleDeleteCartItem = (id) => {
     dispatch(deleteCartItem(id));
+    setOpenAlert(true);
+    setTextAlertSuccess("Xóa sản phẩm thành công");
+    const newCheckList = checkList?.filter(e => e !== id);
+    setCheckList(newCheckList);
   };
   const handleDeleteAllCartItem = (id) => {
     dispatch({
@@ -84,6 +76,10 @@ function Cart(props) {
       value: [],
     });
     dispatch(deleteAllCartItem(cart?.id));
+    setOpenAlert(true);
+    setTextAlertSuccess("Xóa sản phẩm thành công");
+    setCheckList([]);
+    setCheckAll(false);
   };
   const handleCheckAll = () => {
     if (checkAll) {
@@ -120,8 +116,8 @@ function Cart(props) {
       .filter((id) => !checkList.includes(id));
     setUnCheckList(c.filter((id) => !checkList.includes(id)));
     if (checkList?.length === 0) {
-      setShowAlert(true);
-      setShowSnackbar(true);
+      setOpenAlert(true);
+      setTextAlertError("Vui lòng chọn dịch vụ trước khi thanh toán");
     } else {
       setOpenCheckoutModal(true);
     }
@@ -163,7 +159,6 @@ function Cart(props) {
                 <div className="text-price">Giá</div>
               </div>
             </div>
-            {console.log("check cart :", cart?.items)}
             <div className="cart-body">
               {cart?.items?.map((e) => {
                 return (
@@ -205,25 +200,31 @@ function Cart(props) {
                     </div>
                     <div className="text-price d-block text-align-end">
                       {console.log("check e :", e)}
-                      <div  style={{
-                          marginLeft: "10px",
-                          fontWeight: "400",
-                          color: "#666",
-                          textDecoration: e?.sale ? "line-through" : '',
-                        }}>{nf.format(e?.price * e?.quantity)} VNĐ
-                      </div>
-
-                      {e?.sale ? 
                       <div
                         style={{
                           marginLeft: "10px",
                           fontWeight: "400",
-                          color: "#Ff4d4d",
+                          color: "#666",
+                          textDecoration: e?.sale ? "line-through" : "",
                         }}
                       >
-                        {nf.format(e?.price * (100 - e?.sale) / 100 * e?.quantity)} VNĐ
+                        {nf.format(e?.price * e?.quantity)} VNĐ
                       </div>
-                     : null }
+
+                      {e?.sale ? (
+                        <div
+                          style={{
+                            marginLeft: "10px",
+                            fontWeight: "400",
+                            color: "#Ff4d4d",
+                          }}
+                        >
+                          {nf.format(
+                            ((e?.price * (100 - e?.sale)) / 100) * e?.quantity
+                          )}{" "}
+                          VNĐ
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 );
@@ -231,10 +232,6 @@ function Cart(props) {
             </div>
           </div>
           <div className="checkout-box">
-            {/* <div className="total">
-              <div className="text">Subtotal</div>
-              <div className="value">{handleTotalPrice}</div>
-            </div> */}
             <div className="checkout">
               <div>
                 <div className="text">Tổng tiền</div>
@@ -256,12 +253,21 @@ function Cart(props) {
           unCheckList={unCheckList}
         />
       ) : null}
-      {showAlert ? (
-        <CustomSnackbar>
-          <Alert severity="error">
-            Vui lòng chọn dịch vụ trước khi thanh toán
-          </Alert>
-        </CustomSnackbar>
+      {openAlert && textAlertError?.length > 0 ? (
+        <Alerts
+          text={textAlertError}
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
+      {openAlert && textAlertSuccess?.length > 0 ? (
+        <Alerts
+          text={textAlertSuccess}
+          status="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
       ) : null}
     </>
   );

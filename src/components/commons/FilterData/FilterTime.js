@@ -16,8 +16,6 @@ function FilterTime(props) {
   const [dateEnd, setDateEnd] = useState(new Date());
 
   const dispatch = useDispatch();
-
-  console.log("check dateStart :", parseDateToString(dateStart));
   
   const handleChangeTimeStart = (value, typeValue) => {
     dispatch({

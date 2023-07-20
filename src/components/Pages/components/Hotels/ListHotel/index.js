@@ -13,8 +13,6 @@ import {
   everageStar,
   handleConvertArr,
 } from "../../../../commons/actions/actionCommons";
-import { Button } from "@mui/material";
-import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { useLocation } from "react-router-dom";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
 
@@ -26,12 +24,11 @@ function ListHotel(props) {
   const dispatch = useDispatch();
 
   const history = useHistory();
+  const account = useSelector(state => state.auth.account);
 
   const cartId = useSelector((state) => state.cart?.id);
 
   const items = useSelector((state) => state.hotel.items);
-
-  const account = useSelector(state => state.auth.account);
 
   const filter = useSelector((state) => state.hotel.filter);
 
@@ -39,7 +36,6 @@ function ListHotel(props) {
 
   useEffect(() => {
     dispatch(getCartByUser(account?.userId));
-    console.log(name);
     if (name) {
       dispatch({
         type: "CHANGE_FILTER_HOTEL",
@@ -78,18 +74,6 @@ function ListHotel(props) {
     });
   };
 
-  const handleAddCartItem = (e) => {
-    const cartModel = {
-      cartId: cartId,
-      categoryName: "hotel",
-      categoryId: e?.id,
-      name: e?.name,
-      price: Number(e?.price),
-      quantity: 1,
-    };
-    dispatch(addCartItem(cartModel));
-  };
-
   const handleClearFilter = () => {
     dispatch({
       type: "RESET_FILTER_HOTEL",
@@ -110,11 +94,6 @@ function ListHotel(props) {
               <div className="text">{e?.name}</div>
             </div>
           </div>
-          {/* <div className="btn">
-            <Button onClick={() => handleAddCartItem(e)}>
-              Thêm vào giỏ hàng
-            </Button>
-          </div> */}
           <div className="rate">
             {handleConvertArr(Number(e?.star) || 0)?.map((item) => {
               return (
@@ -202,9 +181,6 @@ function ListHotel(props) {
                   </div>
                 ) : null}
               </div>
-              {/* <div className="btn-add">
-                <button onClick={() => handleAddCartItem(e)}>Đặt ngay</button>
-              </div> */}
             </div>
           </div>
         </div>

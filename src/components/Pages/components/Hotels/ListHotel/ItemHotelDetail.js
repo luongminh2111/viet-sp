@@ -8,21 +8,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getHotelDetailItem } from "../actions/ListHotelActionCallApi";
 import { useState } from "react";
 import Footer from "../../../../HomePage/Footer";
-import {
-  handleConvertArr,
-  handleEverageStar,
-} from "../../../../commons/actions/actionCommons";
-import { Button } from "@mui/material";
+import { handleConvertArr } from "../../../../commons/actions/actionCommons";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { hotelBenefits } from "../commons/DataCommon";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
+import Alerts from "../../../../../commons/Alert";
 const nf = new Intl.NumberFormat("en");
 
 function ItemHotelDetail(props) {
   const [item, setItem] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [textError, setTextError] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
+
   const history = useHistory();
   const cartId = useSelector((state) => state.cart?.id);
-  const account = useSelector(state => state.auth.account);
+  const account = useSelector((state) => state.auth.account);
 
   const dispatch = useDispatch();
 
@@ -32,7 +33,6 @@ function ItemHotelDetail(props) {
     const id = path?.split("/hotel/detail/")?.[1];
     dispatch(getHotelDetailItem(id)).then((res) => {
       setItem(res);
-      console.log("check res :", res);
     });
   }, []);
 
@@ -46,7 +46,15 @@ function ItemHotelDetail(props) {
       price: Number(e?.price),
       quantity: 1,
     };
-    dispatch(addCartItem(cartModel));
+    dispatch(addCartItem(cartModel)).then((json) => {
+      setOpenAlert(true);
+      if (json?.error) {
+        setIsSuccess(false);
+        setTextError(json?.error);
+      } else {
+        setIsSuccess(true);
+      }
+    });
   };
 
   const renderListRoom = () => {
@@ -199,14 +207,6 @@ function ItemHotelDetail(props) {
                         <div>{item?.address}</div>
                       </div>
                     </div>
-                    {/* <div>
-                      <Button
-                        variant="container"
-                        onClick={() => handleAddCartItem(item)}
-                      >
-                        Thêm vào giỏ hàng
-                      </Button>
-                    </div> */}
                   </div>
                 </div>
                 <div className="pb-4 mb-2">
@@ -294,7 +294,7 @@ function ItemHotelDetail(props) {
                       </div>
                     </div>
                   </div>
-                  
+
                   <hr />
                   <div className="list-room">{renderListRoom()}</div>
                   <div className="list-review">
@@ -429,6 +429,22 @@ function ItemHotelDetail(props) {
         </div>
       </div>
       <Footer />
+      {isSuccess && openAlert ? (
+        <Alerts
+          text="Đã thêm vào giỏ hàng"
+          status="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
+      {!isSuccess && textError?.length > 0 && openAlert ? (
+        <Alerts
+          text={textError}
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
     </div>
   );
 }

@@ -8,7 +8,6 @@ function Comment(props) {
   const { blogId, parentId } = props;
 
   const auth = useSelector(state => state.auth.account);
-  console.log("check auth :", auth);
   const [content, setContent] = useState('');
 
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ function Comment(props) {
       parentId: parentId || 0,
       content: content
     };
-    console.log("check model : ", commentModel);
     dispatch(postComment(commentModel));
     setTimeout(() => {
       dispatch(getCommentsByBlogItem(blogId));

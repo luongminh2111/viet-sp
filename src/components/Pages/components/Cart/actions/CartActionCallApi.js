@@ -8,9 +8,14 @@ export const addCartItem = (cartModel) => dispatch =>{
     data: JSON.stringify(cartModel)
   }
 
-  return callApi(url, options).then(res => {
-    console.log("check res?.data : ", res?.data);
-  })
+  return callApi(url, options).then(
+    (response) => {
+      return response?.data;
+    },
+    (error) => {
+      return error?.response?.data;
+    }
+  );
 }
 
 export const updateCart = (cartId, cartModel) => dispatch =>{

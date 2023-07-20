@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const callApi = function callApi(url, options) {
+const callApi = async function callApi(url, options) {
   const accessToken = sessionStorage.getItem(`token`);
   if (!options.mode) {
     options.mode = 'cors';
@@ -19,7 +19,7 @@ const callApi = function callApi(url, options) {
     };
   // }
   options.url = url;
-  return axios(options)
+  return await axios(options)
     .then(
       (response) => { return response; },
       (error) => { return error; },
