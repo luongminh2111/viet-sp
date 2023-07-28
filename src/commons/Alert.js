@@ -5,24 +5,24 @@ import "./Alert.scss";
 
 function Alerts(props) {
 
-  const {text, status, open, setOpen} = props;
+    const {text, status, open, setOpen} = props;
 
-  const onCloseClickHandler = (event) => {
-    setOpen(false);
-  };
+    const onCloseClickHandler = (event) => {
+        setOpen(false);
+    };
 
-  return (
-    <Snackbar
-      autoHideDuration={2000}
-      open={open}
-      onClose={onCloseClickHandler}
-      anchorOrigin={{ horizontal: "center", vertical: "top" }}
-    >
-      <Alert severity={status}>
-       {text}
-      </Alert>
-    </Snackbar>
-  );
+    return (
+        <Snackbar
+            autoHideDuration={2000}
+            open={open}
+            onClose={onCloseClickHandler}
+            anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        >
+            <Alert severity={status}>
+                {text}
+            </Alert>
+        </Snackbar>
+    );
 
 }
 export default Alerts;

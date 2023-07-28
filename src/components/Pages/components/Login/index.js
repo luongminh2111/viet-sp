@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Close } from "@material-ui/icons";
 import "../styles/Login.scss";
 import { login } from "../../actions/AccountActionCallApi";
@@ -22,8 +22,13 @@ function Login(props) {
   const [messagePass, setMessagePass] = useState("");
   const [textError, setTextError] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
-
   const dispatch = useDispatch();
+
+  const onClose = () => {
+    handleClose();
+    dispatch({type: 'CHECK_AUTH', value: false})
+  }
+
   const history = useHistory();
 
   const handleChangePass = (value) => {
@@ -83,7 +88,7 @@ function Login(props) {
       className="dialog-login"
       open={open}
       maxWidth="lg"
-      onClose={handleClose}
+      onClose={onClose}
     >
       <DialogTitle>
         <Box className="head">
@@ -91,7 +96,7 @@ function Login(props) {
         </Box>
         <Box>Đăng nhập</Box>
         <Box className="close">
-          <Close onClick={handleClose} />
+          <Close onClick={onClose} />
         </Box>
       </DialogTitle>
       <DialogContent>

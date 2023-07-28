@@ -4,8 +4,6 @@ import Footer from "../../../../HomePage/Footer";
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import "../styles/index.scss";
 import { useDispatch, useSelector } from "react-redux";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import {
   changeCartItemProperties,
   deleteAllCartItem,
@@ -20,6 +18,7 @@ import Alerts from "../../../../../commons/Alert";
 const nf = new Intl.NumberFormat("en");
 
 function Cart(props) {
+
   const [checkAll, setCheckAll] = useState(false);
   const [checkList, setCheckList] = useState([]);
   const [unCheckList, setUnCheckList] = useState([]);

@@ -3,15 +3,16 @@ import React from "react";
 import HeaderNav from "../../../../commons/HeaderNav/HeaderNav";
 import "../styles/Detail.scss";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelDetailItem } from "../actions/ListHotelActionCallApi";
-import { useState } from "react";
 import Footer from "../../../../HomePage/Footer";
 import { handleConvertArr } from "../../../../commons/actions/actionCommons";
 import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { hotelBenefits } from "../commons/DataCommon";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
+import { CircularProgress } from '@mui/material';
+
 import Alerts from "../../../../../commons/Alert";
 const nf = new Intl.NumberFormat("en");
 
@@ -20,6 +21,7 @@ function ItemHotelDetail(props) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [textError, setTextError] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
   const cartId = useSelector((state) => state.cart?.id);
@@ -31,11 +33,14 @@ function ItemHotelDetail(props) {
     dispatch(getCartByUser(account?.userId));
     const path = history.location.pathname;
     const id = path?.split("/hotel/detail/")?.[1];
+    setLoading(true);
     dispatch(getHotelDetailItem(id)).then((res) => {
       setItem(res);
+      setLoading(false);
+      console.log("check chay vao day oknahhsa");
     });
   }, []);
-
+  
   const handleAddCartItem = (e) => {
     const cartModel = {
       cartId: cartId,
@@ -155,8 +160,6 @@ function ItemHotelDetail(props) {
   };
 
   const handleChangeText = (text) => {
-    console.log("Check text :", text);
-    console.log("Check replaceAll :", text?.replaceAll(" ", "%20"));
     return text?.replaceAll(" ", "%20");
   };
 
@@ -175,6 +178,7 @@ function ItemHotelDetail(props) {
           <div className="text">> Chi tiết </div>
         </div>
         <hr />
+        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div>  : 
         <div className="container">
           <div className="row">
             <div className="col-lg-10 col-xl-9">
@@ -426,7 +430,7 @@ function ItemHotelDetail(props) {
               </div>
             </div>
           </div>
-        </div>
+        </div> }
       </div>
       <Footer />
       {isSuccess && openAlert ? (

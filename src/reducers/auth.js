@@ -1,6 +1,7 @@
 const initState = {
   account: {},
   positionCallApiCheckAuth: false,
+  checkLogin: false,
 };
 
 const auth = (state = initState, action) => {
@@ -16,10 +17,12 @@ const auth = (state = initState, action) => {
         account: action.account
       }
     case "RESET_AUTH":
+      return initState;
+    case "CHECK_LOGIN": 
       return {
         ...state,
-        account: {}
-      };
+        checkLogin: action.value
+      }
     default:
       return state;
   }

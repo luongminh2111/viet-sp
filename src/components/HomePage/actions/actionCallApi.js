@@ -36,7 +36,7 @@ export const search = (type, name) => dispatch => {
     method: 'GET'
   }
 
-  const url =  `${BASE_URL}/api/${type}/search/${name}`;
+  const url =  `${BASE_URL}/api/${type}/search_by_name/${name}`;
 
   return axios.get(url, options).then(res => {
     if(res?.data){

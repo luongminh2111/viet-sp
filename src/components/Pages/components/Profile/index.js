@@ -11,7 +11,6 @@ import {
 } from "./actions/ProfileActionCallApi";
 import { useState } from "react";
 import "./styles/index.scss";
-import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import Alerts from "../../../../commons/Alert";
 
 function Profile(props) {

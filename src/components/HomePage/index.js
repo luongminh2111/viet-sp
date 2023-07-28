@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Contents from "./Contents.js";
 import Footer from "./Footer";
 import Login from "../Pages/components/Login";
 import Register from "../Pages/components/Register";
+import { useSelector } from "react-redux";
 
 function HomePage(props) {
   const [showPopupLogin, setShowPopupLogin] = useState(false);
   const [showPopupRegister, setShowPopupRegister] = useState(false);
+  const auth = useSelector(state => state.auth);
+  useEffect(() => {
+    console.log("check auth :", auth);
+    if(auth?.checkLogin === true) {
+      console.log("check hdkshkash");
+      handleOpenLoginForm();
+    } else {
+      setShowPopupLogin(false);
+    }
+  }, [auth]);
 
   const handleOpenLoginForm = () => {
     setShowPopupLogin(true);

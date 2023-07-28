@@ -12,6 +12,8 @@ import { addCartItem } from "../../Cart/actions/CartActionCallApi";
 import { getTourTrending } from "../../../../HomePage/actions/actionCallApi";
 import { getCartByUser } from "../../../actions/AccountActionCallApi";
 import Alerts from "../../../../../commons/Alert";
+import { CircularProgress } from '@mui/material';
+
 const nf = new Intl.NumberFormat("en");
 function ItemTourDetail(props) {
   const [item, setItem] = useState({});
@@ -24,14 +26,17 @@ function ItemTourDetail(props) {
   const [textError, setTextError] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getCartByUser(account?.userId));
     const path = history.location.pathname;
     const id = path?.split("/tour/detail/")?.[1];
+    setLoading(true);
     dispatch(getTourTrending());
     dispatch(getTourDetailItem(id)).then((res) => {
       setItem(res);
+      setLoading(false);
     });
   }, []);
 
@@ -87,6 +92,7 @@ function ItemTourDetail(props) {
           <div className="text">> Chi tiết </div>
         </div>
         <hr />
+        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div> : 
         <div className="container">
           <div className="row">
             <div className="col-lg-9 col-xl-8" style={{ marginTop: "30px" }}>
@@ -417,7 +423,7 @@ function ItemTourDetail(props) {
               </div>
             </div>
           </div>
-        </div>
+        </div> }
       </div>
       <Footer />
       {isSuccess && openAlert ? (

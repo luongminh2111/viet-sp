@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import "../styles/HeaderNav/HeaderNav.scss";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import logo from "./logo.png";
 
 function HeaderNav(props) {
@@ -65,17 +63,6 @@ function HeaderNav(props) {
     history.push("/profile");
   };
 
-
-  const renderDropdown = () => {
-    return (
-      <div className="dropdown-wrapper">
-        <div onClick={() => handleRedirectPage("blog")}>Bài viết</div>
-        <div>About us</div>
-        <div>Contact us</div>
-      </div>
-    );
-  };
-
   const renderDropdownAccount = () => {
     return (
       <div className="dropdown-account-wrapper">
@@ -102,6 +89,7 @@ function HeaderNav(props) {
       };
     }, [accountRef]);
   };
+
   const useOutsidePage = (pageRef) => {
     useEffect(() => {
       function handleClickOutside(event) {
@@ -119,6 +107,7 @@ function HeaderNav(props) {
       };
     }, [pageRef]);
   };
+
   useOutsideAccount(accountRef);
   useOutsidePage(pageRef);
 
@@ -165,30 +154,16 @@ function HeaderNav(props) {
         </div>
       </div>
       <div className="nav-bar-bottom">
-        <div className="nav-bar left">
+        <div className="nav-bar left" onClick={() => history.push("/")} style={{cursor: 'pointer'}} >
           <img style={{width: "50px"}} src={logo}/>
           VietTravel
           </div>
         <div className="nav-bar right">
-          <div onClick={() => history.push("")}>Trang chủ</div>
+          <div onClick={() => history.push("/")}>Trang chủ</div>
           <div onClick={() => handleRedirectPage("hotel")}>Khách sạn</div>
           <div onClick={() => handleRedirectPage("tour")}>Tour</div>
-          {/* <div onClick={() => handleRedirectPage("vehicle")}>Vehicle</div> */}
           <div onClick={() => handleRedirectPage("blog")}>Bài viết</div>
-          <div style={{width: "100px"}} onClick={() => handleRedirectPage("")}>Về chúng tôi</div>
-          {/* <div
-            className="div-page"
-            ref={pageRef}
-            onClick={() => setShowDropDown(!showDropDown)}
-          >
-            <div className="d-flex">
-              <span style={{ marginRight: "8px" }}>Page</span>
-              <span>
-                <i className="fa-solid fa-chevron-down"></i>
-              </span>
-            </div>
-            {showDropDown ? renderDropdown() : null}
-          </div> */}
+          <div style={{width: "100px"}} onClick={() => history.push("/")}>Về chúng tôi</div>
           <div className="shopping" onClick={() => handleRedirectPage("cart")}>
           <i class="fa-solid fa-cart-shopping" style={{fontSize: '20px'}}></i>
           </div>

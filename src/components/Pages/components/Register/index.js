@@ -236,9 +236,9 @@ function Register(props) {
               </Button>
             </Box>
           </Box>
-          {isSuccess && openAlert ? 
+          {isSuccess && openAlert ?
           <Alerts text="Đăng ký thành công!" status="success" open={openAlert} setOpen={setOpenAlert}  /> : null }
-           { !isSuccess && textError?.length > 0  && openAlert ? 
+           { !isSuccess && textError?.length > 0  && openAlert ?
           <Alerts text={textError} status="error" open={openAlert} setOpen={setOpenAlert} /> : null }
         </div>
       </DialogContent>
