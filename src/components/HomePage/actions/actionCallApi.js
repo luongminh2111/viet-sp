@@ -38,7 +38,7 @@ export const search = (type, name) => dispatch => {
 
   const url =  `${BASE_URL}/api/${type}/search_by_name/${name}`;
 
-  return axios.get(url, options).then(res => {
+  return callApi(url, options).then(res => {
     if(res?.data){
       dispatch(updateTourTrending(res.data));
     }

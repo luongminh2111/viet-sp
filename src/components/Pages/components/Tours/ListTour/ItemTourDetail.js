@@ -50,7 +50,7 @@ function ItemTourDetail(props) {
     const splits = arr?.split(";");
     return splits?.join(" ; ");
   };
-  console.log("check item :", item);
+  
   const handleAddCartItem = (e) => {
     console.log(cartId);
     const cartModel = {
@@ -92,7 +92,7 @@ function ItemTourDetail(props) {
           <div className="text">> Chi tiết </div>
         </div>
         <hr />
-        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div> : 
+        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div> :
         <div className="container">
           <div className="row">
             <div className="col-lg-9 col-xl-8" style={{ marginTop: "30px" }}>

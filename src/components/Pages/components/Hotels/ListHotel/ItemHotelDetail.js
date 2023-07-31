@@ -40,7 +40,7 @@ function ItemHotelDetail(props) {
       console.log("check chay vao day oknahhsa");
     });
   }, []);
-  
+
   const handleAddCartItem = (e) => {
     const cartModel = {
       cartId: cartId,
@@ -178,7 +178,7 @@ function ItemHotelDetail(props) {
           <div className="text">> Chi tiết </div>
         </div>
         <hr />
-        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div>  : 
+        {loading ? <div className="w-100 d-flex justify-content-center align-items-center" style={{height: "250px"}}><CircularProgress /></div>  :
         <div className="container">
           <div className="row">
             <div className="col-lg-10 col-xl-9">

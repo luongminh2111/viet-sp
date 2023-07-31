@@ -18,7 +18,7 @@ const auth = (state = initState, action) => {
       }
     case "RESET_AUTH":
       return initState;
-    case "CHECK_LOGIN": 
+    case "CHECK_LOGIN":
       return {
         ...state,
         checkLogin: action.value

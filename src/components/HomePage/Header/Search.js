@@ -5,11 +5,15 @@ import { GridSearchIcon } from "@mui/x-data-grid";
 import { search } from "../actions/actionCallApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Alerts from "../../../commons/Alert";
 function Search(props) {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.account);
+
   const history = useHistory();
   const [searchItem, setSearchItem] = useState("hotel");
   const [name, setName] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
   // const renderLabel = () => {
   //   switch (searchItem) {
   //     case "hotel":
@@ -35,15 +39,19 @@ function Search(props) {
   
   const handleFilterLocation = (e) => {
     setName(e.target.value);
-    console.log("viet check",name);
   }
 
   const handleSearch = () => {
-    dispatch(search(searchItem, name));
-    history.push({
-      pathname: `/${searchItem}`,
-      state: { name: name }
-    });
+    if(auth?.userId > 0) {
+      dispatch(search(searchItem, name));
+      history.push({
+        pathname: `/${searchItem}`,
+        state: { name: name }
+      });
+    } else {
+      setOpenAlert(true);
+    }
+
   }
 
   return (
@@ -95,6 +103,14 @@ function Search(props) {
           </div>
         </div>
       </div>
+      {openAlert ? (
+        <Alerts
+          text="Bạn cần đăng nhập để sử dụng chức năng này"
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
     </div>
   );
 }

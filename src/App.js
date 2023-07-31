@@ -17,6 +17,7 @@ import Blog from "./components/Pages/components/Blogs/components";
 import BlogDetail from "./components/Pages/components/Blogs/components/BlogDetail";
 import Cart from "./components/Pages/components/Cart/components";
 import Profile from "./components/Pages/components/Profile";
+import AboutUs from "./components/Pages/components/AboutUs";
 
 function App() {
   const checkAuth = useSelector(state => state?.auth?.positionCallApiCheckAuth);
@@ -47,7 +48,8 @@ function App() {
       <Router> 
         <React.Fragment>
           <Switch>
-            <Route exact path="/" component={HomePage}></Route>       
+            <Route exact path="/" component={HomePage}></Route> 
+            <Route exact path="/about-us" component={AboutUs}></Route> 
             <Route exact path="/hotel" component={Hotels}></Route>   
             <Route exact path="/tour" component={Tours}></Route>
             <Route exact path="/hotel/detail/:id" component={ItemHotelDetail}></Route>

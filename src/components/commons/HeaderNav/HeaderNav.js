@@ -163,7 +163,7 @@ function HeaderNav(props) {
           <div onClick={() => handleRedirectPage("hotel")}>Khách sạn</div>
           <div onClick={() => handleRedirectPage("tour")}>Tour</div>
           <div onClick={() => handleRedirectPage("blog")}>Bài viết</div>
-          <div style={{width: "100px"}} onClick={() => history.push("/")}>Về chúng tôi</div>
+          <div style={{width: "100px"}} onClick={() => history.push("/about-us")}>Về chúng tôi</div>
           <div className="shopping" onClick={() => handleRedirectPage("cart")}>
           <i class="fa-solid fa-cart-shopping" style={{fontSize: '20px'}}></i>
           </div>

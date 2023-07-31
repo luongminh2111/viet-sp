@@ -7,6 +7,8 @@ import { getTourTrendingItems } from "../../Pages/components/Tours/actions/ListT
 import { getHotelTrendingItems } from "../../Pages/components/Hotels/actions/ListHotelActionCallApi";
 import { handleEverageStar } from "../../commons/actions/actionCommons";
 import { useHistory } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
+import Alerts from "../../../commons/Alert";
 
 const listTitle = ["Tour", "Khách sạn"];
 
@@ -14,6 +16,7 @@ function Trending(props) {
   const [curType, setCurType] = useState("Tour");
   const [items, setItems] = useState([]);
 
+  const [openAlert, setOpenAlert] = useState(false);
   const auth = useSelector((state) => state.auth.account);
 
   const trendingHotelItems = useSelector((state) => state.hotel.trendingItems);
@@ -32,10 +35,7 @@ function Trending(props) {
         history.push(`/hotel/detail/${e.id}`);
       }
     } else {
-      dispatch({
-        type: "CHECK_LOGIN",
-        value: true,
-      });
+      setOpenAlert(true);
     }
   };
 
@@ -49,6 +49,12 @@ function Trending(props) {
       setItems(trendingTourItems);
     }
   }, [trendingTourItems]);
+
+  const handleShowTime = (arr) => {
+    if (!arr) return "Chưa có lịch";
+    const splits = arr?.split(";");
+    return splits?.join(" ; ");
+  };
 
   useEffect(() => {
     if (curType === "Tour") {
@@ -82,6 +88,7 @@ function Trending(props) {
           })}
         </div>
         <div className="list-trending">
+          {console.log("check items :", items)}
           {items?.map((et, index) => {
             return (
               <div
@@ -96,9 +103,43 @@ function Trending(props) {
                     <div className="location-icon">
                       <i className="fa-solid fa-location-dot fa-xl"></i>
                     </div>
-                    <div className="text">{et?.locationDTO?.description}</div>
+                    <div className="text">
+                      <span
+                        data-tip=""
+                        data-for={`name-${et?.locationDTO?.description}-${index}`}
+                      >
+                        {et?.locationDTO?.description}
+                      </span>
+
+                      <ReactTooltip
+                        id={`name-${et?.locationDTO?.description}-${index}`}
+                        place="top"
+                        effect="solid"
+                        className="tooltip_name-V2"
+                        type="dark"
+                        border
+                        borderColor="#D3D5D7"
+                      >
+                        {et?.locationDTO?.description}
+                      </ReactTooltip>
+                    </div>
                   </div>
-                  <div className="tour-name">{et?.name}</div>
+                  <div className="tour-name">
+                    <span data-tip="" data-for={`name-${et?.name}-${index}`}>
+                      {et?.name}
+                    </span>
+                    <ReactTooltip
+                      id={`name-${et?.name}-${index}`}
+                      place="top"
+                      effect="solid"
+                      className="tooltip_name-V2"
+                      type="dark"
+                      border
+                      borderColor="#D3D5D7"
+                    >
+                      {et?.name}
+                    </ReactTooltip>
+                  </div>
                   <div className="rate d-flex">
                     <div className="rate-star">
                       {handleEverageStar(et?.reviewsDTOS || [])?.map((e) => {
@@ -118,9 +159,7 @@ function Trending(props) {
                     <div className="icon-time ">
                       <i className="fa-regular fa-clock"></i>
                     </div>
-                    <div className="text">
-                      {getTimeForTrip(et?.timeEnd, et?.timeStart)}
-                    </div>
+                    <div className="text">{handleShowTime(et?.timeStart)}</div>
                   </div>
                 </div>
               </div>
@@ -128,6 +167,14 @@ function Trending(props) {
           })}
         </div>
       </div>
+      {openAlert ? (
+        <Alerts
+          text="Bạn cần đăng nhập để sử dụng chức năng này"
+          status="error"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
+      ) : null}
     </div>
   );
 }
