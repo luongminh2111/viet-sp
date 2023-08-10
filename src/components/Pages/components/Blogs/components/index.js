@@ -1,7 +1,4 @@
 import React from "react";
-import { Radio } from "@material-ui/core";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { useState } from "react";
 import { useEffect } from "react";
 import "../styles/index.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +7,8 @@ import HeaderNav from "../../../../commons/HeaderNav/HeaderNav";
 import { useHistory } from "react-router-dom";
 import Footer from "../../../../HomePage/Footer";
 import PaginationCommon from "../../../../commons/Pagination";
+import jwt_decode from "jwt-decode";
+import { updateUser } from "../../../actions/AccountActionRedux";
 
 function Blog(props) {
   const dispatch = useDispatch();
@@ -19,8 +18,25 @@ function Blog(props) {
   const { items, categories, filter } = blog;
 
   useEffect(() => {
-    dispatch(getListBlog());
-    dispatch(getListBlogCategory());
+    try {
+      const token = sessionStorage.getItem('token');
+      const username = jwt_decode(JSON.stringify(token))?.sub;
+      const id = jwt_decode(JSON.stringify(token))?.id;
+      const role = jwt_decode(JSON.stringify(token))?.role;
+      const account = {
+        username: username,
+        userId: id,
+        userRole: role,
+      };
+      dispatch(updateUser(account));
+      dispatch(getListBlog());
+      dispatch(getListBlogCategory());
+    }
+    catch(e) {
+      setTimeout(() => {
+        history.push("/");
+      }, 0);
+    }
   }, []);
 
   useEffect(() => {

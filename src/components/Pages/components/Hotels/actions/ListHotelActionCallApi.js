@@ -68,7 +68,8 @@ export const getListFilterHotel = () => (dispatch, getState) => {
 
 export const getHotelTrendingItems = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/hotel/find/trending`;
@@ -82,7 +83,8 @@ export const getHotelTrendingItems = () => dispatch => {
 
 export const getHotelDeal = (id) => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/hotel/find/top_deal`;

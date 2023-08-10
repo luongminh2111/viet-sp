@@ -14,11 +14,12 @@ import {
 import { useHistory } from "react-router-dom";
 import CheckoutModal from "./CheckoutModal";
 import Alerts from "../../../../../commons/Alert";
+import jwt_decode from "jwt-decode";
+import { updateUser } from "../../../actions/AccountActionRedux";
 
 const nf = new Intl.NumberFormat("en");
 
 function Cart(props) {
-
   const [checkAll, setCheckAll] = useState(false);
   const [checkList, setCheckList] = useState([]);
   const [unCheckList, setUnCheckList] = useState([]);
@@ -34,6 +35,16 @@ function Cart(props) {
 
   useEffect(() => {
     try {
+      const token = sessionStorage.getItem("token");
+      const username = jwt_decode(JSON.stringify(token))?.sub;
+      const id = jwt_decode(JSON.stringify(token))?.id;
+      const role = jwt_decode(JSON.stringify(token))?.role;
+      const account = {
+        username: username,
+        userId: id,
+        userRole: role,
+      };
+      dispatch(updateUser(account));
       const search = new URLSearchParams(history.location.search);
       const idParam = search?.get("id");
       history.push(`/cart?id=${cart?.id || idParam}`);
@@ -46,7 +57,9 @@ function Cart(props) {
       }
 
       dispatch(getCartItems(cart?.id || idParam));
-    } catch (e) {}
+    } catch (e) {
+      history.push("/");
+    }
   }, []);
 
   const handleChangeQuantityItem = (cartItem, value) => {
@@ -65,7 +78,7 @@ function Cart(props) {
     dispatch(deleteCartItem(id));
     setOpenAlert(true);
     setTextAlertSuccess("Xóa sản phẩm thành công");
-    const newCheckList = checkList?.filter(e => e !== id);
+    const newCheckList = checkList?.filter((e) => e !== id);
     setCheckList(newCheckList);
   };
   const handleDeleteAllCartItem = (id) => {

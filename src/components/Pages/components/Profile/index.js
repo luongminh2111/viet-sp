@@ -11,7 +11,10 @@ import {
 } from "./actions/ProfileActionCallApi";
 import { useState } from "react";
 import "./styles/index.scss";
+import jwt_decode from "jwt-decode";
 import Alerts from "../../../../commons/Alert";
+import { updateUser } from "../../actions/AccountActionRedux";
+import { useHistory } from "react-router-dom";
 
 function Profile(props) {
   const dispatch = useDispatch();
@@ -29,15 +32,34 @@ function Profile(props) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
 
+  const history = useHistory();
+
   useEffect(() => {
-    dispatch(getUserById()).then((res) => {
-      setUser(res);
-      setPhone(res?.phone);
-      setAddress(res?.address);
-      setFullName(res?.fullName);
-      setUserName(res?.username);
-    });
-    dispatch(getListOrderedByUser()).then((json) => setOrders(json));
+    try {
+      const token = sessionStorage.getItem('token');
+      const username = jwt_decode(JSON.stringify(token))?.sub;
+      const id = jwt_decode(JSON.stringify(token))?.id;
+      const role = jwt_decode(JSON.stringify(token))?.role;
+      const account = {
+        username: username,
+        userId: id,
+        userRole: role,
+      };
+      dispatch(updateUser(account));
+      dispatch(getUserById()).then((res) => {
+        setUser(res);
+        setPhone(res?.phone);
+        setAddress(res?.address);
+        setFullName(res?.fullName);
+        setUserName(res?.username);
+      });
+      dispatch(getListOrderedByUser()).then((json) => setOrders(json));
+    }
+    catch(e) {
+      setTimeout(() => {
+        history.push("/");
+      }, 0);
+    }
   }, []);
 
   const handleChangeTab = (value) => {

@@ -6,7 +6,8 @@ import { updateListDestination, updateTourTrending, updateVehicleTrending } from
 
 export const getDestinationItems = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
   const url =  `${BASE_URL}/api/location/find/topdestination`;
 
@@ -19,7 +20,8 @@ export const getDestinationItems = () => dispatch => {
 
 export const getTourTrending = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/tour/find/trending`;
@@ -48,7 +50,8 @@ export const search = (type, name) => dispatch => {
 
 export const getVehicleTrending = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/vehicle/find/trending`;
@@ -62,7 +65,8 @@ export const getVehicleTrending = () => dispatch => {
 
 export const getVehicleTopDeal = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
   const url =  `${BASE_URL}/api/vehicle/find/top_deal`;
 

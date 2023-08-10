@@ -50,7 +50,7 @@ function ItemTourDetail(props) {
     const splits = arr?.split(";");
     return splits?.join(" ; ");
   };
-  
+
   const handleAddCartItem = (e) => {
     console.log(cartId);
     const cartModel = {

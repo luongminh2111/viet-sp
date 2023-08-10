@@ -48,8 +48,8 @@ function App() {
       <Router> 
         <React.Fragment>
           <Switch>
-            <Route exact path="/" component={HomePage}></Route> 
-            <Route exact path="/about-us" component={AboutUs}></Route> 
+            <Route exact path="/" component={HomePage}></Route>
+            <Route exact path="/about-us" component={AboutUs}></Route>
             <Route exact path="/hotel" component={Hotels}></Route>   
             <Route exact path="/tour" component={Tours}></Route>
             <Route exact path="/hotel/detail/:id" component={ItemHotelDetail}></Route>

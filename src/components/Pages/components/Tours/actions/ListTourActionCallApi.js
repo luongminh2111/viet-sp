@@ -69,7 +69,8 @@ export const getListFilterTour = () => (dispatch, getState) => {
 
 export const getTourTrendingItems = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/tour/find/trending`;
@@ -83,7 +84,8 @@ export const getTourTrendingItems = () => dispatch => {
 } 
 export const getTourDeals = () => dispatch => {
   const options = {
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors'
   }
 
   const url =  `${BASE_URL}/api/tour/find/top_deal`;
